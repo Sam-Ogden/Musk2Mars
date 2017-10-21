@@ -1,8 +1,8 @@
-/Musk2Mars/Library/*
-/Musk2Mars/Temp/*
-/Musk2Mars/[Oo]bj/*
-/Musk2Mars/[Bb]uild/*
-/Musk2Mars/[Bb]uilds/*
+/Musk2Mars/Library/
+/Musk2Mars/Temp/
+/Musk2Mars/[Oo]bj/
+/Musk2Mars/[Bb]uild/
+/Musk2Mars/[Bb]uilds/
 /Musk2Mars/Assets/AssetStoreTools*
 
 # Visual Studio 2015 cache directory
