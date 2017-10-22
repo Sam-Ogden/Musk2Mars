@@ -5,3 +5,5 @@ we dont need to (and gitignore being a bitch).
 
 use git checkout -- Musk2Mars/Library/ 
 before adding and commiting xox
+
+Main game scene not implemented yet
