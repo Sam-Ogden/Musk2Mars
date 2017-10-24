@@ -245,6 +245,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialFuel: 100
+  moveSpeed: 10
+  maxVelocityChange: 1
 --- !u!1 &536302622
 GameObject:
   m_ObjectHideFlags: 0
