@@ -18,8 +18,14 @@ public class CanvasManager : MonoBehaviour {
 		
 	}
 
+	//Hides or shows the end game menu. Used when user runs out of fuel in CharacterBehaviour.
 	public void menuActive(bool showMenu) {
 		goToMainMenu.SetActive (showMenu);
 		continuePlaying.SetActive (showMenu);
+	}
+
+	//When user clicks continuePlaying button, a video ad is played then the game continues
+	void showVideoAd() {
+
 	}
 }
