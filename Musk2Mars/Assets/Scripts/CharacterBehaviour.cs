@@ -8,24 +8,26 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float initialFuel;			//std fuel in rocket when start game
 	public float moveSpeed;				//horizontal movement speed
 	public float maxVelocityChange;
+	public CanvasManager canvas;		//Canvas manager to show end game options and ads
 
 	public string inputMode;
-
-	public GameObject continuePlaying;	//UI Button that plays an ad so user can continue playing
-	public GameObject goToMainMenu;		//UI Button Return to main menu when game is over.
-
 
 	private float fuel;
 
 	// Use this for initialization
 	void Start () {
 		fuel = initialFuel;
-		goToMainMenu.SetActive(false);
-		continuePlaying.SetActive(false);
+		canvas.menuActive (false);
+		
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		
+		// REMOVE ************************
+		fuel--;
+
+
 		// If no more fuel, game is over.
 		if (fuel == 0) {
 			outOfFuel ();
@@ -66,9 +68,8 @@ public class CharacterBehaviour : MonoBehaviour {
 										ForceMode2D.Force);
 	}
 
-	// GAME OVER - Show view ad option to continue game
+	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
-		goToMainMenu.SetActive(true);
-		continuePlaying.SetActive(true);
+		canvas.menuActive (true);
 	}
 }
