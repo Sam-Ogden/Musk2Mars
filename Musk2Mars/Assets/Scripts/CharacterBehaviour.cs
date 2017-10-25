@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterBehaviour : MonoBehaviour {
 
@@ -17,14 +18,12 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		fuel = initialFuel;
-		canvas.menuActive (false);
-		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
-		// REMOVE ************************
+		// REMOVE Testing outoffuel menu
 		fuel--;
 
 
@@ -70,6 +69,28 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
+		//pause game, save state
+
+		//show menu
 		canvas.menuActive (true);
+	}
+
+	//called by CanvasManager when user is to begin landing
+	public void beginLanding() {
+
+	}
+
+	//If user chooses to watch ad, then continue game after
+	public void continueGame() {
+		//reset fuel
+
+	}
+
+	//When the user has finished attempting to land, return to main menu
+	void gameOver() {
+		//save info
+
+		//fade into Menu screen
+		SceneManager.LoadScene ("Menu");
 	}
 }

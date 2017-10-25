@@ -6,26 +6,31 @@ public class CanvasManager : MonoBehaviour {
 
 
 	public GameObject continuePlaying;	//UI Button that plays an ad so user can continue playing
-	public GameObject goToMainMenu;		//UI Button Return to main menu when game is over.
+	public GameObject goToLanding;		//UI Button Return to game to land.
+	public CharacterBehaviour character;
 
 	// Use this for initialization
 	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+		menuActive (false);
 	}
 
-	//Hides or shows the end game menu. Used when user runs out of fuel in CharacterBehaviour.
+	//Hides or shows the out of fuel menu. Used when user runs out of fuel in CharacterBehaviour.
 	public void menuActive(bool showMenu) {
-		goToMainMenu.SetActive (showMenu);
+		goToLanding.SetActive (showMenu);
 		continuePlaying.SetActive (showMenu);
 	}
 
-	//When user clicks continuePlaying button, a video ad is played then the game continues
-	void showVideoAd() {
+	//When user clicks continuePlaying button, a video ad is played then the game continues (Landing)
+	public void showVideoAd() {
+		menuActive (false);
 
+		//return to game
+		character.continueGame();	
+	}
+
+	//Returns to character bahaviour for the landing section of the game
+	public void characterLand() {
+		menuActive (false);
+		character.beginLanding ();
 	}
 }
