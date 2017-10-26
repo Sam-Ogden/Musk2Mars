@@ -14,18 +14,24 @@ public class CharacterBehaviour : MonoBehaviour {
 	public string inputMode;
 
 	private float fuel;
+	private DataControl data = DataControl.control;
 
 	// Use this for initialization
 	void Start () {
 		fuel = initialFuel;
+		data.load ();
+		if(!data.containsKey("fuel")) data.addPair ("fuel", 100);
 	}
-	
+
+
 	// Update is called once per frame
 	void Update () {
 		
 		// REMOVE Testing outoffuel menu
 		fuel--;
 
+		data.setValue ("fuel", data.getValue ("fuel") - 10);
+		Debug.Log (data.getValue ("fuel"));
 
 		// If no more fuel, game is over.
 		if (fuel == 0) {

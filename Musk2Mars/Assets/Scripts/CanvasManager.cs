@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿/*
+	Contolls the canvas in main game scene
+*/
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
