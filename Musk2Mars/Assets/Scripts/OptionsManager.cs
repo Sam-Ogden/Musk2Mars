@@ -9,7 +9,6 @@ public class OptionsManager : MonoBehaviour {
 	private DataControl data = DataControl.control;
 
 	void Start() {
-		data.load();
 	}
 
 	public void updateInputMethod() {

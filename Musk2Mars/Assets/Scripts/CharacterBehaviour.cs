@@ -30,7 +30,6 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		Debug.Log(inputMode);
 		// If no more fuel, game is over.
 		if (fuel == 0) {
 			outOfFuel ();
