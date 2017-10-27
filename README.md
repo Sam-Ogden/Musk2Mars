@@ -6,4 +6,5 @@ we dont need to (and gitignore being a bitch).
 use git checkout -- Musk2Mars/Library/ 
 before adding and commiting xox
 
-Main game scene not implemented yet
+Screen wrap
+https://gamedevelopment.tutsplus.com/articles/create-an-asteroids-like-screen-wrapping-effect-with-unity--gamedev-15055
