@@ -11,28 +11,26 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float maxVelocityChange;
 	public CanvasManager canvas;		//Canvas manager to show end game options and ads
 
-	public string inputMode;
-
 	private float fuel;
 	private DataControl data = DataControl.control;
+	public string inputMode;
 
 	// Use this for initialization
 	void Start () {
 		fuel = initialFuel;
 		data.load ();
-		if(!data.containsKey("fuel")) data.addPair ("fuel", 100);
+		if(data.containsKey("inputMethod")) {
+			inputMode = data.getValue("inputMethod"); //GET INPUT MODE FROM DATA STORE
+		} else {
+			data.addPair("inputMethod", "tilt");
+			inputMode = "tilt";
+		}
 	}
 
 
 	// Update is called once per frame
 	void Update () {
-		
-		// REMOVE Testing outoffuel menu
-		fuel--;
-
-		data.setValue ("fuel", data.getValue ("fuel") - 10);
-		Debug.Log (data.getValue ("fuel"));
-
+		Debug.Log(inputMode);
 		// If no more fuel, game is over.
 		if (fuel == 0) {
 			outOfFuel ();

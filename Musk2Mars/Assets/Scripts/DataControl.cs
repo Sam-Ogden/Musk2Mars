@@ -2,6 +2,9 @@
 	Controls game data and options. See youtube video of whats going on.
 	Saves data in a file and loads again so data can be saved between sessions.
 	https://unity3d.com/learn/tutorials/topics/scripting/persistence-saving-and-loading-data
+
+	- create empty game object DataControl, add this script to it. Create a prefab from the game object
+	- add prefab to each scene that needs to access data.
 */
 
 using System.Collections;
@@ -16,23 +19,23 @@ public class DataControl : MonoBehaviour {
 	public static DataControl control;
 
 	//Key value pairs of info to store
-	private Dictionary<string, int> data = new Dictionary<string, int>();
+	private Dictionary<string, string> data = new Dictionary<string, string>();
 
 	public bool containsKey(string k) {
 		if (data.ContainsKey (k)) return true;
 		return false;
 	}
 
-	public void addPair(string k, int v) {
+	public void addPair(string k, string v) {
 		data.Add (k, v);
 		save ();
 	}
 
-	public int getValue(string k) {
+	public string getValue(string k) {
 		return data [k];
 	}
 
-	public void setValue(string k, int v) {
+	public void setValue(string k, string v) {
 		data[k] = v;
 		save ();
 	}
@@ -45,6 +48,7 @@ public class DataControl : MonoBehaviour {
 		if (control == null) {
 			DontDestroyOnLoad (gameObject);
 			control = this;
+			load();
 		} else if (control != this) {
 			Destroy (gameObject);
 		}
@@ -78,6 +82,6 @@ public class DataControl : MonoBehaviour {
 [Serializable]
 class PlayerData {
 	
-	public Dictionary<string, int> data = new Dictionary<string, int>();
+	public Dictionary<string, string> data = new Dictionary<string, string>();
 
 }

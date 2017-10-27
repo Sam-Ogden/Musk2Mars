@@ -1,16 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
+	public Slider inputSlider;
+	private DataControl data = DataControl.control;
+
+	void Start() {
+		data.load();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
+
+	public void updateInputMethod() {
+		string input = "";
+		if(inputSlider.value == 0) input = "tilt";
+		else input = "touch";
+
+		if (data.containsKey ("inputMethod")) data.setValue ("inputMethod", input);
+		else data.addPair ("inputMethod", input);
 	}
 }
