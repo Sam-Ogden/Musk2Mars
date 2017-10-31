@@ -6,21 +6,21 @@ using UnityEngine.SceneManagement;
 
 public class CharacterBehaviour : MonoBehaviour {
 
-	public float initialFuel;			//std fuel in rocket when start game
-	public float moveSpeed;				//horizontal movement speed
-	public float maxVelocityChange;
-	public CanvasManager canvas;		//Canvas manager to show end game options and ads
+	public float initialFuel;		// Std fuel in rocket when start game
+	public float moveSpeed;			// Horizontal movement speed
+	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
+	public CanvasManager canvas;	// Tanvas manager to show end game options and ads
 
-	private float fuel;
+	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data = DataControl.control;
-	public string inputMode;
+	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 
 	// Use this for initialization
 	void Start () {
-		fuel = initialFuel;
+		fuel = initialFuel;	// Always start with standard fuel level
 		data.load ();
 		if(data.containsKey("inputMethod")) {
-			inputMode = data.getValue("inputMethod"); //GET INPUT MODE FROM DATA STORE
+			inputMode = data.getValue("inputMethod"); // GET INPUT MODE FROM DATA STORE
 		} else {
 			data.addPair("inputMethod", "tilt");
 			inputMode = "tilt";
@@ -36,9 +36,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 
 		Vector2 velocityChange;
-		//calculate how fast player should be moving
+		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
-			//input taking when tilting
+			// Input taking when tilting
 			Vector2 targetVelocityH = new Vector2(Input.acceleration.x, 0);
 			targetVelocityH = transform.TransformDirection(targetVelocityH);
 			targetVelocityH *= moveSpeed;
@@ -46,14 +46,14 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Apply a force that attempts to reach our target velocity
 			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
 			velocityChange = (targetVelocityH - velocity);
-			//make sure change not too sudden
+			// Make sure change not too sudden
 			velocityChange.x = Mathf.Clamp(velocityChange.x,
 							-maxVelocityChange, maxVelocityChange);
 		} else if(inputMode == "touch") {
-			//input taking when using screen sides
+			// Input taking when using screen sides
 			velocityChange = new Vector2();
 		} else {
-			//test input taking (arrow keys or WASD)
+			// Test input taking (arrow keys or WASD)
 			Vector2 targetVelocityH = new Vector2(Input.GetAxis("Horizontal"), 0);
 			targetVelocityH = transform.TransformDirection(targetVelocityH);
 			targetVelocityH *= moveSpeed;
@@ -61,7 +61,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Apply a force that attempts to reach our target velocity
 			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
 			velocityChange = (targetVelocityH - velocity);
-			//make sure change not too sudden
+			// Make sure change not too sudden
 			velocityChange.x = Mathf.Clamp(velocityChange.x,
 							-maxVelocityChange, maxVelocityChange);
 		}
@@ -74,26 +74,26 @@ public class CharacterBehaviour : MonoBehaviour {
 	void outOfFuel() {
 		//pause game, save state
 
-		//show menu
+		// Show menu
 		canvas.menuActive (true);
 	}
 
-	//called by CanvasManager when user is to begin landing
+	// Called by CanvasManager when user is to begin landing
 	public void beginLanding() {
 
 	}
 
-	//If user chooses to watch ad, then continue game after
+	// If user chooses to watch ad, then continue game after
 	public void continueGame() {
 		//reset fuel
 
 	}
 
-	//When the user has finished attempting to land, return to main menu
+	// When the user has finished attempting to land, return to main menu
 	void gameOver() {
 		//save info
 
-		//fade into Menu screen
+		// Fade into Menu screen
 		SceneManager.LoadScene ("Menu");
 	}
 }
