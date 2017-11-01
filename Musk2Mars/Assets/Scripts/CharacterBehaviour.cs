@@ -12,19 +12,22 @@ public class CharacterBehaviour : MonoBehaviour {
 	public CanvasManager canvas;	// Tanvas manager to show end game options and ads
 
 	private float fuel;	// Ship's current level of fuel ⛽️
-	private DataControl data = DataControl.control;
+	private DataControl data;
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 
 	// Use this for initialization
 	void Start () {
+		data = DataControl.control;
 		fuel = initialFuel;	// Always start with standard fuel level
-		data.load ();
 		if(data.containsKey("inputMethod")) {
 			inputMode = data.getValue("inputMethod"); // GET INPUT MODE FROM DATA STORE
 		} else {
 			data.addPair("inputMethod", "tilt");
 			inputMode = "tilt";
 		}
+
+		inputMode = "TEST"; /* REMOVE ME */
+
 	}
 
 

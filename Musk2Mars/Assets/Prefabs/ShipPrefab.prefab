@@ -103,7 +103,7 @@ MonoBehaviour:
   moveSpeed: 30
   maxVelocityChange: 30
   canvas: {fileID: 0}
-  inputMode: 
+  inputMode: test
 --- !u!212 &212893553542753722
 SpriteRenderer:
   m_ObjectHideFlags: 1
