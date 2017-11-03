@@ -10,15 +10,20 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float moveSpeed;			// Horizontal movement speed
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
+	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
-	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
+	private int verticalSpeed;
+	private int coinsCollected;
 
 	// Use this for initialization
 	void Start () {
 		data = DataControl.control;
 		fuel = initialFuel;	// Always start with standard fuel level
+		verticalSpeed = 0;
+		coinsCollected = 0;
+
 		if(data.containsKey("inputMethod")) {
 			inputMode = data.getValue("inputMethod"); // GET INPUT MODE FROM DATA STORE
 		} else {
@@ -33,7 +38,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		fuel--;
+		//fuel--;
 		// If no more fuel, game is over.
 		if (fuel == 0) {
 			outOfFuel ();
@@ -74,12 +79,33 @@ public class CharacterBehaviour : MonoBehaviour {
 										ForceMode2D.Force);
 	}
 
+	//Physics updates go here
+	void FixedUpdate() {
+
+	}
+
+	//Collision handler
+	void OnTriggerEnter(Collider other) {
+		if (other.gameObject. CompareTag ("Coin")) {
+			
+			other.gameObject.SetActive (false);
+			//Coint coins
+			coinsCollected++;
+		}
+	}
+
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
 		//pause game, save state
 
 		// Show menu
 		if(canvas) canvas.menuActive (true);
+	}
+
+
+	// Returns vertical speed (used in moving objects down screen - allowing character to stay central)
+	public int getVeticalSpeed() {
+		return verticalSpeed;
 	}
 
 	// Called by CanvasManager when user is to begin landing
