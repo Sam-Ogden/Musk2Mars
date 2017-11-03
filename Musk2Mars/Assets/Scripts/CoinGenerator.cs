@@ -18,7 +18,7 @@ public class CoinGenerator : MonoBehaviour {
 		//Generate initial coins
 		coins = new Transform[10];
 		for(int i = 0; i < 10; i++) {
-			coins[i] = generateCoin(new Vector3(0, i-3));
+			coins[i] = generateCoin(new Vector3(0, i-5));
 		}
 	}
 
@@ -26,20 +26,19 @@ public class CoinGenerator : MonoBehaviour {
 	void Update() {
 		speed = character.getVeticalSpeed();
 
-		//move coins down
-
 		//remove coins that are below bottom of screen
 		checkOfScreen();
 
 		//generateCoin(); 
 	}
 
+
 	// Removes any coin whos y val is less than bottom of screen
 	void checkOfScreen() {
 		//remove coin from scene
 		for(int i = 0; i < coins.Length; i++) {
-			if(coins[i].transform.position.y < 0) {
-				//coin of screen, remove it
+			if(coins[i] && coins[i].transform.position.y < -4) {
+				coins[i].gameObject.SetActive(false);
 			}
 		}
 	}

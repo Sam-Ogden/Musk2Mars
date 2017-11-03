@@ -79,18 +79,19 @@ public class CharacterBehaviour : MonoBehaviour {
 										ForceMode2D.Force);
 	}
 
-	//Physics updates go here
+	// Physics updates go here
 	void FixedUpdate() {
 
 	}
 
-	//Collision handler
-	void OnTriggerEnter(Collider other) {
-		if (other.gameObject. CompareTag ("Coin")) {
-			
-			other.gameObject.SetActive (false);
-			//Coint coins
+	// Collision handler
+	void OnCollisionEnter2D(Collision2D obj) {
+		if (obj.gameObject.CompareTag ("Coin")) {
+			obj.gameObject.SetActive(false); //Coin collected remove from game
+			// Play satisfying hit coin sound
+			// Coint coins
 			coinsCollected++;
+			Debug.Log(coinsCollected);
 		}
 	}
 
