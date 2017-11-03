@@ -9,7 +9,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float moveSpeed;			// Horizontal movement speed
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
-	public CanvasManager canvas;	// Tanvas manager to show end game options and ads
+	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
@@ -33,6 +33,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+		fuel--;
 		// If no more fuel, game is over.
 		if (fuel == 0) {
 			outOfFuel ();
@@ -78,7 +79,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		//pause game, save state
 
 		// Show menu
-		canvas.menuActive (true);
+		if(canvas) canvas.menuActive (true);
 	}
 
 	// Called by CanvasManager when user is to begin landing
