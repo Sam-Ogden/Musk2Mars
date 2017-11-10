@@ -16,6 +16,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	private DataControl data;
 	private int verticalSpeed;
 	private int coinsCollected;
+	private bool start;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +33,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 
 		inputMode = "TEST"; /* REMOVE ME */
+		start = true;
 	}
 
 
@@ -42,6 +44,16 @@ public class CharacterBehaviour : MonoBehaviour {
 		if (fuel == 0) {
 			outOfFuel ();
 		}
+
+		if(start) {
+			Rigidbody2D rb = GetComponent<Rigidbody2D>();
+			rb.gravityScale = -0.3f;
+			if(transform.position.y > -0.4) {
+				rb.gravityScale = 0;
+				start = false;
+			}
+		}
+
 
 		Vector2 velocityChange;
 		// Calculate how fast player should be moving 🚀
@@ -88,7 +100,6 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Play satisfying hit coin sound
 			// Coint coins
 			coinsCollected++;
-			Debug.Log(coinsCollected);
 		}
 	}
 
