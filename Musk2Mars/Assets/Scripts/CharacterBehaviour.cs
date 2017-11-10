@@ -95,6 +95,9 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Play satisfying hit coin sound
 			// Coint coins
 			coinsCollected++;
+		} else if(obj.gameObject.CompareTag ("Fuel")) {
+			obj.gameObject.SetActive(false);
+			fuel++;
 		}
 	}
 

@@ -57,7 +57,7 @@ Rigidbody2D:
   m_Mass: 0.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 2
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -104,7 +104,7 @@ MonoBehaviour:
   maxVelocityChange: 30
   canvas: {fileID: 0}
   inputMode: test
-  takeOffForce: 2
+  takeOffForce: 0.01
 --- !u!212 &212893553542753722
 SpriteRenderer:
   m_ObjectHideFlags: 1
