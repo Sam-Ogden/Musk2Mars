@@ -11,6 +11,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
+	public float takeOffForce;
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
@@ -46,15 +47,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 
 		if(start) {
-			Rigidbody2D rb = GetComponent<Rigidbody2D>();
-			rb.gravityScale = -0.3f;
-			if(transform.position.y > -0.4) {
-				rb.gravityScale = 0;
-				start = false;
-			}
+			TakeOff();
 		}
-
-
+			
 		Vector2 velocityChange;
 		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
@@ -103,6 +98,15 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 	}
 
+	void TakeOff() {
+		Rigidbody2D rb = GetComponent<Rigidbody2D>();
+		rb.AddForce(new Vector2(0, takeOffForce), ForceMode2D.Impulse);
+		// Gets bottom of screen based off camera size and puts character
+		// quarter of the way up
+		if(transform.position.y > (-Camera.main.orthographicSize/2)) {
+			start = false;
+		}
+	}
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
 		//pause game, save state

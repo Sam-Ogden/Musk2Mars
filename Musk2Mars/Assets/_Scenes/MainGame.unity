@@ -173,7 +173,7 @@ Rigidbody2D:
   m_Mass: 0.2
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 0
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -252,6 +252,7 @@ MonoBehaviour:
   maxVelocityChange: 30
   canvas: {fileID: 1940474461}
   inputMode: 
+  takeOffForce: 0.2
 --- !u!114 &40511607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -378,7 +379,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1644372082
+  randomSeed: -221627033
   InitialModule:
     serializedVersion: 3
     enabled: 1
