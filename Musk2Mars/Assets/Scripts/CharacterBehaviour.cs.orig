@@ -47,13 +47,17 @@ public class CharacterBehaviour : MonoBehaviour {
 		if (fuel == 0) {
 			outOfFuel ();
 		}
-
-		if(start) {
-			TakeOff();
-		}	
+<<<<<<< HEAD
 	}
 	// Physics updates go here
 	void FixedUpdate() {
+=======
+
+		if(start) {
+			TakeOff();
+		}
+			
+>>>>>>> master
 		Vector2 velocityChange;
 		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
