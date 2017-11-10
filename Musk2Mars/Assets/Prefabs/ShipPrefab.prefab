@@ -101,7 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialFuel: 100
   moveSpeed: 30
+  flySpeed: 30
   maxVelocityChange: 30
+  maxFlyChange: 40
   canvas: {fileID: 0}
   inputMode: test
 --- !u!212 &212893553542753722
@@ -113,7 +115,6 @@ SpriteRenderer:
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -129,7 +130,6 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
   m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5

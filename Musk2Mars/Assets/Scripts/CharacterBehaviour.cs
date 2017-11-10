@@ -8,7 +8,9 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float moveSpeed;			// Horizontal movement speed
+	public float flySpeed;			// Vertical movement speed, for testing only
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
+	public float maxFlyChange;		// The max increase in flying speed at one step
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 
@@ -43,7 +45,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		if (fuel == 0) {
 			outOfFuel ();
 		}
-
+	}
+	// Physics updates go here
+	void FixedUpdate() {
 		Vector2 velocityChange;
 		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
@@ -62,26 +66,29 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Input taking when using screen sides
 			velocityChange = new Vector2();
 		} else {
+			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;// Current ship velocity
+
 			// Test input taking (arrow keys or WASD)
 			Vector2 targetVelocityH = new Vector2(Input.GetAxis("Horizontal"), 0);
 			targetVelocityH = transform.TransformDirection(targetVelocityH);
 			targetVelocityH *= moveSpeed;
 
+			// For testing spawning etc. can use input to fly
+			Vector2 targetVelocityV = new Vector2(0, Input.GetAxis("Vertical"));
+			targetVelocityV = transform.TransformDirection(targetVelocityV);
+			targetVelocityV *= flySpeed;
+
 			// Apply a force that attempts to reach our target velocity
-			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-			velocityChange = (targetVelocityH - velocity);
+			velocityChange = (targetVelocityH + targetVelocityV - velocity);
 			// Make sure change not too sudden
 			velocityChange.x = Mathf.Clamp(velocityChange.x,
 							-maxVelocityChange, maxVelocityChange);
+			velocityChange.y = Mathf.Clamp(velocityChange.y,
+							-maxFlyChange, maxFlyChange);
 		}
 
 		GetComponent<Rigidbody2D>().AddForce(velocityChange,
 										ForceMode2D.Force);
-	}
-
-	// Physics updates go here
-	void FixedUpdate() {
-
 	}
 
 	// Collision handler
@@ -91,7 +98,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			// Play satisfying hit coin sound
 			// Coint coins
 			coinsCollected++;
-			Debug.Log(coinsCollected);
+			//Debug.Log(coinsCollected);
 		}
 	}
 

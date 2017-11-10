@@ -10,6 +10,7 @@ public class CharacterWrap : MonoBehaviour {
 	public Transform ghost;	// Rocket prefab for creating ghosts
 	private bool isVisible;
 	private Renderer[] renderers;
+	public GameObject player;
 
 	// Use this for initialization
 	void Start () {
@@ -41,19 +42,18 @@ public class CharacterWrap : MonoBehaviour {
 	void PositionGhostShips() {
 		// All ghost positions will be relative to the ships (this) transform,
 		// so let's star with that.
-		var ghostPosition = transform.position;
+		var ghostPosition = player.transform.position;
 	
 		// We're positioning the ghosts clockwise behind the edges of the screen.
 		// Let's start with the far right.
-		ghostPosition.x = transform.position.x + screenWidth;
-		ghostPosition.y = transform.position.y;
+		ghostPosition.x = player.transform.position.x + screenWidth;
+		ghostPosition.y = player.transform.position.y;
 		ghosts[0].position = ghostPosition;
-	
 		// Far left
-		ghostPosition.x = transform.position.x - screenWidth;
-		ghostPosition.y = transform.position.y;
+		ghostPosition.x = player.transform.position.x - screenWidth;
+		ghostPosition.y = player.transform.position.y;
 		ghosts[1].position = ghostPosition;
-	
+		//Debug.Log(transform.parent.position.y);
 		// All ghost ships should have the same rotation as the main ship
 		for(int i = 0; i < 2; i++) {
 			ghosts[i].rotation = transform.rotation;
