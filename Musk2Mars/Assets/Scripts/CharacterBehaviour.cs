@@ -34,7 +34,6 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 
 		inputMode = "TEST"; /* REMOVE ME */
-
 	}
 
 
@@ -90,10 +89,17 @@ public class CharacterBehaviour : MonoBehaviour {
 		GetComponent<Rigidbody2D>().AddForce(velocityChange,
 										ForceMode2D.Force);
 	}
+<<<<<<< HEAD
 
+=======
+		
+>>>>>>> master
 	// Collision handler
 	void OnCollisionEnter2D(Collision2D obj) {
 		if (obj.gameObject.CompareTag ("Coin")) {
+			/*
+                NEED TO DELETE GAME OBJECT
+			*/
 			obj.gameObject.SetActive(false); //Coin collected remove from game
 			// Play satisfying hit coin sound
 			// Coint coins
