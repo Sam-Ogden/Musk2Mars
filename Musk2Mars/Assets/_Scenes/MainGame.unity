@@ -177,8 +177,8 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
+  m_CollisionDetection: 1
+  m_Constraints: 4
 --- !u!212 &40511604
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -249,9 +249,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialFuel: 100
   moveSpeed: 30
+  flySpeed: 40
   maxVelocityChange: 30
+  maxFlyChange: 30
   canvas: {fileID: 1940474461}
-  inputMode: 
+  inputMode: test
   takeOffForce: 0.03
 --- !u!114 &40511607
 MonoBehaviour:
@@ -379,7 +381,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -145243026
+  randomSeed: -495689032
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4008,6 +4010,7 @@ GameObject:
   - component: {fileID: 1494158994}
   - component: {fileID: 1494158998}
   - component: {fileID: 1494158999}
+  - component: {fileID: 1494159000}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4101,6 +4104,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   character: {fileID: 40511606}
   coinPrefab: {fileID: 4058003614855156, guid: 85a9b5dff48f240248e2747dd857f96a, type: 2}
+--- !u!114 &1494159000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1494158993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e74ffed18ea4f574f939659784e6fe51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 40511601}
 --- !u!1001 &1630704505
 Prefab:
   m_ObjectHideFlags: 0
@@ -4349,7 +4364,7 @@ RectTransform:
   m_GameObject: {fileID: 1940474456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 99}
-  m_LocalScale: {x: 0.007043344, y: 0.007043344, z: 0.007043344}
+  m_LocalScale: {x: 0.007042254, y: 0.007042254, z: 0.007042254}
   m_Children:
   - {fileID: 1892248733}
   - {fileID: 663456082}

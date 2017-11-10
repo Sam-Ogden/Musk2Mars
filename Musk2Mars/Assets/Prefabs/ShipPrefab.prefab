@@ -101,7 +101,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialFuel: 100
   moveSpeed: 30
+  flySpeed: 40
   maxVelocityChange: 30
+  maxFlyChange: 30
   canvas: {fileID: 0}
   inputMode: test
   takeOffForce: 0.01

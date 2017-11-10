@@ -26,6 +26,10 @@ public class CharacterWrap : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+	}
+
+	void FixedUpdate() {
 		isVisible = CheckRenderers();	//check if any renderers are visible
 		if(!isVisible) {
 			SwapShips();
@@ -63,9 +67,8 @@ public class CharacterWrap : MonoBehaviour {
 	void SwapShips() {
 		// Reposition main ship in the new position
 		foreach(var ghost in ghosts) {
-			if (ghost.position.x < screenWidth && ghost.position.x > -screenWidth &&
-					ghost.position.y < screenHeight && ghost.position.y > -screenHeight) {
-
+			if (ghost.position.x < screenWidth && ghost.position.x > -screenWidth) {
+				Debug.Log(ghost.name);
 				transform.position = ghost.position;
 				break;
 			}

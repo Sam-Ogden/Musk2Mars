@@ -8,7 +8,9 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float moveSpeed;			// Horizontal movement speed
+	public float flySpeed;
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
+	public float maxFlyChange;
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce;
@@ -49,7 +51,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		if(start) {
 			TakeOff();
 		}
-			
+	}
+
+	void FixedUpdate() {
 		Vector2 velocityChange;
 		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
@@ -73,12 +77,20 @@ public class CharacterBehaviour : MonoBehaviour {
 			targetVelocityH = transform.TransformDirection(targetVelocityH);
 			targetVelocityH *= moveSpeed;
 
-			// Apply a force that attempts to reach our target velocity
-			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-			velocityChange = (targetVelocityH - velocity);
-			// Make sure change not too sudden
-			velocityChange.x = Mathf.Clamp(velocityChange.x,
-							-maxVelocityChange, maxVelocityChange);
+			// For testing spawning etc. can use input to fly
+ 			Vector2 targetVelocityV = new Vector2(0, Input.GetAxis("Vertical"));
+ 			targetVelocityV = transform.TransformDirection(targetVelocityV);
+ 			targetVelocityV *= flySpeed;
+ 
+  			// Apply a force that attempts to reach our target velocity
+ 			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+ 			velocityChange = (targetVelocityH - velocity);
+ 			velocityChange = (targetVelocityH + targetVelocityV - velocity);
+  			// Make sure change not too sudden
+  			velocityChange.x = Mathf.Clamp(velocityChange.x,
+ 							-maxVelocityChange, maxVelocityChange);
+ 			velocityChange.y = Mathf.Clamp(velocityChange.y,
+ 							-maxFlyChange, maxFlyChange);
 		}
 
 		GetComponent<Rigidbody2D>().AddForce(velocityChange,
