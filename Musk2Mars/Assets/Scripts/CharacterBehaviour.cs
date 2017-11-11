@@ -14,6 +14,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce;  // Force added to character for take off
+	public float touchForce;    // Force used on touch input
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
@@ -35,7 +36,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			inputMode = "tilt";
 		}
 
-		inputMode = "TEST"; /* REMOVE ME */
+		inputMode = "test"; /* REMOVE ME */
 		start = true;
 	}
 
@@ -54,47 +55,53 @@ public class CharacterBehaviour : MonoBehaviour {
 	}
 
 	void FixedUpdate() {
-		Vector2 velocityChange;
+		Vector2 velocityChange = new Vector2(0,0);
 		// Calculate how fast player should be moving 🚀
 		if(inputMode == "tilt") {
 			// Input taking when tilting
-			Vector2 targetVelocityH = new Vector2(Input.acceleration.x, 0);
-			targetVelocityH = transform.TransformDirection(targetVelocityH);
-			targetVelocityH *= moveSpeed;
-
-			// Apply a force that attempts to reach our target velocity
-			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
-			velocityChange = (targetVelocityH - velocity);
-			// Make sure change not too sudden
-			velocityChange.x = Mathf.Clamp(velocityChange.x,
-							-maxVelocityChange, maxVelocityChange);
+			velocityChange = MovementForce(Input.acceleration.x, 0);
 		} else if(inputMode == "touch") {
 			// Input taking when using screen sides
-			velocityChange = new Vector2();
+			//Touch input = Input.GetTouch(0);
+			if(Input.GetMouseButton(0)) {
+				if(Input.mousePosition.x > Screen.width/2) {
+					velocityChange = MovementForce(touchForce, 0);
+				} else {
+					velocityChange = MovementForce(-touchForce, 0);
+				}
+			} else {
+				velocityChange = MovementForce(0, 0);
+			}
 		} else {
-			// Test input taking (arrow keys or WASD)
-			Vector2 targetVelocityH = new Vector2(Input.GetAxis("Horizontal"), 0);
-			targetVelocityH = transform.TransformDirection(targetVelocityH);
-			targetVelocityH *= moveSpeed;
-
-			// For testing spawning etc. can use input to fly
- 			Vector2 targetVelocityV = new Vector2(0, Input.GetAxis("Vertical"));
- 			targetVelocityV = transform.TransformDirection(targetVelocityV);
- 			targetVelocityV *= flySpeed;
- 
-  			// Apply a force that attempts to reach our target velocity
- 			Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
- 			velocityChange = (targetVelocityH - velocity);
- 			velocityChange = (targetVelocityH + targetVelocityV - velocity);
-  			// Make sure change not too sudden
-  			velocityChange.x = Mathf.Clamp(velocityChange.x,
- 							-maxVelocityChange, maxVelocityChange);
- 			velocityChange.y = Mathf.Clamp(velocityChange.y,
- 							-maxFlyChange, maxFlyChange);
+			// Test input
+			velocityChange = MovementForce(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 		}
 
 		GetComponent<Rigidbody2D>().AddForce(velocityChange,
 										ForceMode2D.Force);
+	}
+
+	Vector2 MovementForce(float forceX, float forceY) {
+		Vector2 velocityChange = new Vector2();
+		// Input taking when tilting
+		Vector2 targetVelocityH = new Vector2(forceX, 0);
+		Vector2 targetVelocityV = new Vector2(0, forceY);
+		targetVelocityH = transform.TransformDirection(targetVelocityH);
+		targetVelocityH *= moveSpeed;
+		targetVelocityV = transform.TransformDirection(targetVelocityV);
+		targetVelocityV *= flySpeed;
+
+		// Apply a force that attempts to reach our target velocity
+		Vector2 velocity = GetComponent<Rigidbody2D>().velocity;
+		velocityChange = (targetVelocityH - velocity);
+
+		velocityChange = (targetVelocityH + targetVelocityV - velocity);
+		// Make sure change not too sudden
+		velocityChange.x = Mathf.Clamp(velocityChange.x,
+			-maxVelocityChange, maxVelocityChange);
+		velocityChange.y = Mathf.Clamp(velocityChange.y,
+			-maxFlyChange, maxFlyChange);
+		return velocityChange;
 	}
 		
 	// Collision handler
