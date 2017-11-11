@@ -21,6 +21,8 @@ public class CharacterBehaviour : MonoBehaviour {
 	private int verticalSpeed;
 	private int coinsCollected;
 	private bool start;
+	private double score;
+	private int frameCount;
 
 	// Use this for initialization
 	void Start () {
@@ -38,7 +40,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 		// REMOVE BEFORE PUSHING
 		inputMode = "test";	// Left like this until testing time
-			
+		score = 0;
 		start = true;
 	}
 
@@ -53,6 +55,14 @@ public class CharacterBehaviour : MonoBehaviour {
 
 		if(start) {
 			TakeOff();
+		}
+
+		if(canvas) {
+			frameCount++;
+			if((frameCount % 3) == 0) {
+				score = score + 0.1;
+				canvas.UpdateScore(System.Math.Round(score, 2));
+			}
 		}
 	}
 
@@ -110,15 +120,13 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Collision handler
 	void OnCollisionEnter2D(Collision2D obj) {
 		if (obj.gameObject.CompareTag ("Coin")) {
-			/*
-                NEED TO DELETE GAME OBJECT
-			*/
-			obj.gameObject.SetActive(false); //Coin collected remove from game
+			//Coin collected remove from game
+			Destroy(obj.gameObject);
 			// Play satisfying hit coin sound
 			// Coint coins
 			coinsCollected++;
 		} else if(obj.gameObject.CompareTag ("Fuel")) {
-			obj.gameObject.SetActive(false);
+			Destroy(obj.gameObject);
 			fuel++;
 		}
 	}
