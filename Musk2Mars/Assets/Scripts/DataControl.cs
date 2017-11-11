@@ -67,14 +67,18 @@ public class DataControl : MonoBehaviour {
 	}
 
 	public void load() {
-		BinaryFormatter bf = new BinaryFormatter ();
-		FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
+		if(File.Exists(Application.persistentDataPath + "/playerInfo.dat")) {
+			BinaryFormatter bf = new BinaryFormatter ();
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 
-		//take file and turn it back into a PlayerData object
-		PlayerData loadedData = (PlayerData) bf.Deserialize (file);
-		file.Close ();
+			//take file and turn it back into a PlayerData object
+			PlayerData loadedData = (PlayerData) bf.Deserialize (file);
+			file.Close ();
 
-		data = loadedData.data;
+			data = loadedData.data;
+		} else {
+			save();
+		}
 	}
 }
 

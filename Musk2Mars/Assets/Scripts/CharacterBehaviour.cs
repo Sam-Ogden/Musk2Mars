@@ -35,8 +35,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			data.addPair("inputMethod", "tilt");
 			inputMode = "tilt";
 		}
-
-		inputMode = "test"; /* REMOVE ME */
+			
 		start = true;
 	}
 
