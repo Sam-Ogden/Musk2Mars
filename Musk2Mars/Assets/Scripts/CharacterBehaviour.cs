@@ -35,6 +35,9 @@ public class CharacterBehaviour : MonoBehaviour {
 			data.addPair("inputMethod", "tilt");
 			inputMode = "tilt";
 		}
+
+		// REMOVE BEFORE PUSHING
+		inputMode = "test";	// Left like this until testing time
 			
 		start = true;
 	}
@@ -42,7 +45,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		//fuel--;
+		// fuel--;
 		// If no more fuel, game is over.
 		if (fuel <= 0) {
 			outOfFuel ();
@@ -61,7 +64,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			velocityChange = MovementForce(Input.acceleration.x, 0);
 		} else if(inputMode == "touch") {
 			// Input taking when using screen sides
-			//Touch input = Input.GetTouch(0);
+			// Touch input = Input.GetTouch(0);
 			if(Input.GetMouseButton(0)) {
 				if(Input.mousePosition.x > Screen.width/2) {
 					velocityChange = MovementForce(touchForce, 0);

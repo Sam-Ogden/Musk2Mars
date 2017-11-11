@@ -19,7 +19,6 @@ public class CharacterWrap : MonoBehaviour {
 		
 		renderers = GetComponentsInChildren<Renderer>();
 		screenWidth = screenTopRight.x - screenBottomLeft.x;
-		screenHeight = screenTopRight.y - screenBottomLeft.y;
 		CreateGhostShips();
 		PositionGhostShips();
 	}
@@ -68,7 +67,6 @@ public class CharacterWrap : MonoBehaviour {
 		// Reposition main ship in the new position
 		foreach(var ghost in ghosts) {
 			if (ghost.position.x < screenWidth && ghost.position.x > -screenWidth) {
-				Debug.Log(ghost.name);
 				transform.position = ghost.position;
 				break;
 			}

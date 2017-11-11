@@ -22,9 +22,9 @@ GameObject:
   - component: {fileID: 212893553542753722}
   - component: {fileID: 50718419752545986}
   - component: {fileID: 61420152168289002}
-  - component: {fileID: 114852673984636652}
-  - component: {fileID: 199303689102725426}
   - component: {fileID: 198135258744049580}
+  - component: {fileID: 199303689102725426}
+  - component: {fileID: 114852673984636652}
   m_Layer: 0
   m_Name: ShipPrefab
   m_TagString: Untagged
