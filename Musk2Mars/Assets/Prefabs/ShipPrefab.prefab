@@ -106,7 +106,7 @@ MonoBehaviour:
   maxFlyChange: 30
   canvas: {fileID: 0}
   inputMode: test
-  takeOffForce: 0.01
+  takeOffForce: 0.03
 --- !u!212 &212893553542753722
 SpriteRenderer:
   m_ObjectHideFlags: 1

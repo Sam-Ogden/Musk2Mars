@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212422797458051380}
   - component: {fileID: 61890038324088982}
   - component: {fileID: 50299046882406826}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: FuelPrefab
   m_TagString: Fuel
   m_Icon: {fileID: 0}

@@ -34,7 +34,9 @@ public class CameraBehaviour : MonoBehaviour {
  		if(playerTransform.position.y > Camera.main.transform.position.y - screenHeight/4) {
  			// Divide for smooth movement
  			forceY = Mathf.Abs(Camera.main.transform.position.y - (screenHeight/4) - playerTransform.position.y);
- 		}
+		} else {
+			forceY = 0;
+		}
  
  		Vector3 moveCam = new Vector3(forceX, forceY, 0);
  		this.transform.position += moveCam;

@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 212187296553066154}
   - component: {fileID: 61615962056816442}
   - component: {fileID: 50170480301394568}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: CoinPrefab
   m_TagString: Coin
   m_Icon: {fileID: 0}

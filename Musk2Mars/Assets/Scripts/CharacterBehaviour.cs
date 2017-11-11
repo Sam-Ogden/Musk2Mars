@@ -13,7 +13,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float maxFlyChange;
 	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
-	public float takeOffForce;
+	public float takeOffForce;  // Force added to character for take off
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
@@ -44,7 +44,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	void Update () {
 		//fuel--;
 		// If no more fuel, game is over.
-		if (fuel == 0) {
+		if (fuel <= 0) {
 			outOfFuel ();
 		}
 
@@ -122,6 +122,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			start = false;
 		}
 	}
+
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
 		//pause game, save state
