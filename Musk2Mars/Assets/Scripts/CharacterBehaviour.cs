@@ -56,6 +56,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 	}
 
+	// Physiscs go here
 	void FixedUpdate() {
 		Vector2 velocityChange = new Vector2(0,0);
 		// Calculate how fast player should be moving 🚀

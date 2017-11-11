@@ -67,7 +67,7 @@ public class CharacterWrap : MonoBehaviour {
 		// Reposition main ship in the new position
 		foreach(var ghost in ghosts) {
 			if (ghost.position.x < screenWidth && ghost.position.x > -screenWidth) {
-				transform.position = ghost.position;
+				transform.position = ghost.position;	// Move main ship to the visible position
 				break;
 			}
 		}

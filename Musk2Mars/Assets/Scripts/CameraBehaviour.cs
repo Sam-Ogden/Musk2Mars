@@ -16,9 +16,12 @@ public class CameraBehaviour : MonoBehaviour {
 		playerTransform = player.GetComponent<Transform>();
  		forceY = 0;
  		forceX = 0;
- 
- 		var screenBottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0, 0, transform.position.z));
- 		var screenTopRight = Camera.main.ViewportToWorldPoint(new Vector3(1, 1, transform.position.z));
+
+		// Calculate screen dimensions
+ 		var screenBottomLeft = Camera.main.ViewportToWorldPoint(
+			 new Vector3(0, 0, transform.position.z));
+ 		var screenTopRight = Camera.main.ViewportToWorldPoint(
+			 new Vector3(1, 1, transform.position.z));
  		
  		screenWidth = screenTopRight.x - screenBottomLeft.x;
  		screenHeight = screenTopRight.y - screenBottomLeft.y;
@@ -29,11 +32,13 @@ public class CameraBehaviour : MonoBehaviour {
 		
 	}
 
+	// Fixed Update is used for physics stuff
 	void FixedUpdate (){
  		// Trying to keep rocket height, always same proportion of screen
  		if(playerTransform.position.y > Camera.main.transform.position.y - screenHeight/4) {
  			// Divide for smooth movement
- 			forceY = Mathf.Abs(Camera.main.transform.position.y - (screenHeight/4) - playerTransform.position.y);
+ 			forceY = Mathf.Abs(Camera.main.transform.position.y - 
+			 			(screenHeight/4) - playerTransform.position.y);
 		} else {
 			forceY = 0;
 		}

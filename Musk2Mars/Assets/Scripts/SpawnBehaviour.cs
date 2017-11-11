@@ -5,23 +5,24 @@ using UnityEngine;
 public class SpawnBehaviour : MonoBehaviour {
 
 	public uint generatorNum;	// The number of generators. How many objects can be on the screen at once
-	public GameObject generator;
-	public GameObject coin;
-	public GameObject fuel;
+	public GameObject generator;// Prefab of generator object, assign in UI
+	public GameObject coin;		// Coin Prefab, assign in UI 💰
+	public GameObject fuel;		// Fuel Prefab, assign in UI ⛽️
 	public float upperOffset;	// Distance between top of screen and spawner line
 	public float screenCutoff;	// Padding on sides of screen. Padding on each side: screenCutoff/2
-	public float spawnGap;
-	private Camera cam;
+	public float spawnGap;		// Gap between lines of spawned collectibles
+	private Camera cam;			// Stores main camera 📹
 	private float screenWidth;
 	private float screenHeight;
 	private GameObject[] generators;	// Holds all collectible generators
-	private Queue lines;
-	private float lastY;
-	private GameObject[] collectibles;
+	private Queue lines;	// Queue of information about what lines of collectibles to spawn 📏
+	private float lastY;	// Stores the Y coordinate of the last spawned line
+	private GameObject[] collectibles;	// Stores the prefabs of collectibles, declared further up
 
+	// Patterns should be added in reverse vertical order
 	private byte[,,] patterns = {
 		{
-			{0,0,0,1,1,1},
+			{1,1,1,0,0,0},
 			{1,1,1,0,0,0},
 			{0,1,2,1,0,0},
 			{0,1,1,1,0,0},
@@ -34,7 +35,9 @@ public class SpawnBehaviour : MonoBehaviour {
 	
 	// Use this for initialization
 	void Start () {
-		cam = Camera.main;
+		cam = Camera.main;	// Store main camera
+
+		// Calculate screen sizes
 		var screenBottomLeft = cam.ViewportToWorldPoint(
 			new Vector3(0, 0, transform.position.z));
 		var screenTopRight = cam.ViewportToWorldPoint(
@@ -44,7 +47,7 @@ public class SpawnBehaviour : MonoBehaviour {
 
 		lines = new Queue();
 		lastY = transform.position.y;
-		collectibles = new GameObject[] {coin, fuel};
+		collectibles = new GameObject[] {coin, fuel};	// Add more collectible prefabs here
 		positionSpawn();	// Move parent spawn line to top of screen
 		generateSpawners();	// Arrange spawners in line
 	}
@@ -52,23 +55,26 @@ public class SpawnBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(lines.Count <= 2) {
+			// Starting to run out of instructions so generate more
 			addPattern();
 		}
 		if(transform.position.y >= lastY + spawnGap) {
+			// Far enough from last spawned line, so spawn more
 			spawn();
 		}
 	}
 
+	// Positions spawn above view
 	void positionSpawn() {
 		Vector3 positionChange = new Vector3();
-
 		positionChange.y = (screenHeight / 2) + upperOffset;
 		transform.position += positionChange;
 	}
 
+	// Generate objects in order to keep track of positions without calculating each time
 	void generateSpawners() {
 		generators = new GameObject[generatorNum];
-		float gap = (screenWidth - screenCutoff) / generatorNum;
+		float gap = (screenWidth - screenCutoff) / generatorNum;	// Distribute generators on width
 		float xPosition = transform.position.x - ((screenWidth - screenCutoff) / 2);
 		for(int i = 0; i < generatorNum; i ++) {
 			generators[i] = Instantiate(generator, new Vector3(
