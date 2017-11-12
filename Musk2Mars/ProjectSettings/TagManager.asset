@@ -17,9 +17,9 @@ TagManager:
   - 
   - Background
   - Collectibles
-  - 
-  - 
-  - 
+  - HUD
+  - GameMenu
+  - ContinueMenu
   - 
   - 
   - 

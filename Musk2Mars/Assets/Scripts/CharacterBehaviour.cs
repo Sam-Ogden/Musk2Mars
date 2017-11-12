@@ -11,22 +11,25 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float flySpeed;
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
 	public float maxFlyChange;
-	public CanvasManager canvas;	// Canvas manager to show end game options and ads
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce;  // Force added to character for take off
 	public float touchForce;    // Force used on touch input
 
 	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
+	private GameStateController gameState;
 	private int verticalSpeed;
 	private int coinsCollected;
-	private bool start;
+	private bool takeOff;
 	private double score;
 	private int frameCount;
 
 	// Use this for initialization
 	void Start () {
 		data = DataControl.control;
+		gameState = GameStateController.gameStateController;
+		gameState.ChangeState("End Game");
+
 		fuel = initialFuel;	// Always start with standard fuel level
 		verticalSpeed = 0;
 		coinsCollected = 0;
@@ -41,57 +44,63 @@ public class CharacterBehaviour : MonoBehaviour {
 		// REMOVE BEFORE PUSHING
 		inputMode = "test";	// Left like this until testing time
 		score = 0;
-		start = true;
+		takeOff = true;
 	}
-
-
+		
 	// Update is called once per frame
 	void Update () {
-		// fuel--;
 		// If no more fuel, game is over.
-		if (fuel <= 0) {
+		if (fuel == 0) {
 			outOfFuel ();
 		}
 
-		if(start) {
+		// Take off animation
+		if(takeOff && gameState.gameIsRunning()) {
 			TakeOff();
 		}
 
-		if(canvas) {
+		if(gameState.gameIsRunning()) {
 			frameCount++;
 			if((frameCount % 3) == 0) {
 				score = score + 0.1;
-				canvas.UpdateScore(System.Math.Round(score, 2));
+				gameState.UpdateScore(System.Math.Round(score, 2));
 			}
 		}
 	}
 
 	// Physiscs go here
 	void FixedUpdate() {
-		Vector2 velocityChange = new Vector2(0,0);
-		// Calculate how fast player should be moving 🚀
-		if(inputMode == "tilt") {
-			// Input taking when tilting
-			velocityChange = MovementForce(Input.acceleration.x, 0);
-		} else if(inputMode == "touch") {
-			// Input taking when using screen sides
-			// Touch input = Input.GetTouch(0);
-			if(Input.GetMouseButton(0)) {
-				if(Input.mousePosition.x > Screen.width/2) {
-					velocityChange = MovementForce(touchForce, 0);
+		if(gameState.gameIsRunning()) {
+			fuel--;
+			Vector2 velocityChange = new Vector2(0,0);
+			// Calculate how fast player should be moving 🚀
+			if(inputMode == "tilt") {
+				// Input taking when tilting
+				velocityChange = MovementForce(Input.acceleration.x, 0);
+			} else if(inputMode == "touch") {
+				// Input taking when using screen sides
+				// Touch input = Input.GetTouch(0);
+				if(Input.GetMouseButton(0)) {
+					if(Input.mousePosition.x > Screen.width/2) {
+						velocityChange = MovementForce(touchForce, 0);
+					} else {
+						velocityChange = MovementForce(-touchForce, 0);
+					}
 				} else {
-					velocityChange = MovementForce(-touchForce, 0);
+					velocityChange = MovementForce(0, 0);
 				}
 			} else {
-				velocityChange = MovementForce(0, 0);
+				// Test input
+				velocityChange = MovementForce(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 			}
-		} else {
-			// Test input
-			velocityChange = MovementForce(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-		}
 
-		GetComponent<Rigidbody2D>().AddForce(velocityChange,
-										ForceMode2D.Force);
+			GetComponent<Rigidbody2D>().AddForce(velocityChange,
+											ForceMode2D.Force);
+		}
+	}
+
+	public void StartGame() {
+		gameState.ChangeState("Game Running");
 	}
 
 	Vector2 MovementForce(float forceX, float forceY) {
@@ -127,7 +136,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			coinsCollected++;
 		} else if(obj.gameObject.CompareTag ("Fuel")) {
 			Destroy(obj.gameObject);
-			fuel++;
+			fuel+=100;
 		}
 	}
 
@@ -137,7 +146,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		// Gets bottom of screen based off camera size and puts character
 		// quarter of the way up
 		if(transform.position.y > (-Camera.main.orthographicSize/2)) {
-			start = false;
+			takeOff = false;
 		}
 	}
 
@@ -145,11 +154,10 @@ public class CharacterBehaviour : MonoBehaviour {
 	void outOfFuel() {
 		//pause game, save state
 
-		// Show menu
-		if(canvas) canvas.menuActive (true);
+		// Show end game menu
+		gameState.ChangeState ("Out Of Fuel");
 	}
-
-
+		
 	// Returns vertical speed (used in moving objects down screen - allowing character to stay central)
 	public int getVeticalSpeed() {
 		return verticalSpeed;
@@ -171,6 +179,6 @@ public class CharacterBehaviour : MonoBehaviour {
 		//save info
 
 		// Fade into Menu screen
-		SceneManager.LoadScene ("Menu");
+		gameState.ChangeState("End Game");
 	}
 }

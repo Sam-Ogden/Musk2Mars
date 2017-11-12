@@ -59,7 +59,7 @@ Rigidbody2D:
   m_Mass: 0.2
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: -2.5
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -101,12 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf804080a8ee84a9fd605f83260728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialFuel: 100
+  initialFuel: 1000
   moveSpeed: 30
   flySpeed: 40
   maxVelocityChange: 30
   maxFlyChange: 30
-  canvas: {fileID: 0}
   inputMode: test
   takeOffForce: 0.03
   touchForce: 0.5
