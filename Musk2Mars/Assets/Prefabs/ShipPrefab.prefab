@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf804080a8ee84a9fd605f83260728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialFuel: 1000
+  initialFuel: 100
   moveSpeed: 30
   flySpeed: 40
   maxVelocityChange: 30

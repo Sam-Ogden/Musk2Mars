@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+#if UNITY_ADS
+using UnityEngine.Advertisements; // only compile Ads code on supported platforms
+#endif
 
 public class GameStateController : MonoBehaviour {
 
@@ -25,6 +28,12 @@ public class GameStateController : MonoBehaviour {
          - End Game        == Show GameMenu hide HUD
          - Video Ad        == Show ad only 
 	*/ 
+
+	void Start() {
+		if (Advertisement.isSupported) {
+			Advertisement.Initialize("1582720", true);
+		}
+	}
 
 	void Awake() { 
 		DontDestroyOnLoad (gameObject);
@@ -52,10 +61,9 @@ public class GameStateController : MonoBehaviour {
 
 	// When user clicks continuePlaying button, a video ad is played then the game continues (Landing)
 	public void showVideoAd() {
-		ChangeState ("Video Ad");
+		Advertisement.Show("rewardedVideo");
 		//return to game
-		ChangeState("Game Running");
-		character.continueGame();
+		characterLand();
 	}
 
 	// Returns to character bahaviour for the landing section of the game

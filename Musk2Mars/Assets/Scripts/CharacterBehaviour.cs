@@ -50,6 +50,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// If no more fuel, game is over.
+		fuel--; /* REMOVE */
 		if (fuel == 0) {
 			outOfFuel ();
 		}
@@ -71,7 +72,6 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Physiscs go here
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
-			fuel--;
 			Vector2 velocityChange = new Vector2(0,0);
 			// Calculate how fast player should be moving 🚀
 			if(inputMode == "tilt") {
@@ -165,12 +165,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 	// Called by CanvasManager when user is to begin landing
 	public void beginLanding() {
-
-	}
-
-	// If user chooses to watch ad, then continue game after
-	public void continueGame() {
-		//reset fuel
+		fuel = initialFuel;
 
 	}
 

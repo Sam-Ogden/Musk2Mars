@@ -841,7 +841,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1653826254}
         m_MethodName: showVideoAd
         m_Mode: 1
         m_Arguments:
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Musk 2 Mars
+  m_Text: aa
 --- !u!222 &849500678
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1748,6 +1748,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0e158e6586dc4f119abb8cc599ee856, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1653826254 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114421304918964520, guid: 890dd2076d44d485a9b210a7fdbd981b,
+    type: 2}
+  m_PrefabInternal: {fileID: 770316810}
+  m_Script: {fileID: 11500000, guid: bce7e942caae348eabd6ef094c494947, type: 3}
 --- !u!1 &1891728599
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,7 +1837,7 @@ RectTransform:
   m_GameObject: {fileID: 1891728599}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 99}
-  m_LocalScale: {x: 0.016666666, y: 0.016666666, z: 0.016666666}
+  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
   m_Children:
   - {fileID: 4919432}
   m_Father: {fileID: 0}
@@ -2047,7 +2053,7 @@ RectTransform:
   m_GameObject: {fileID: 1940474456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 99}
-  m_LocalScale: {x: 0.016666666, y: 0.016666666, z: 0.016666666}
+  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
   m_Children:
   - {fileID: 220781122}
   - {fileID: 1113020770}
