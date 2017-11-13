@@ -63,11 +63,15 @@ public class GameStateController : MonoBehaviour {
 	public void showVideoAd() {
 		Advertisement.Show("rewardedVideo");
 		//return to game
-		characterLand();
+		characterContinue();
 	}
 
+	void characterContinue() {
+		ChangeState ("Game Running");
+		character.continueGame();
+	}
 	// Returns to character bahaviour for the landing section of the game
-	public void characterLand() {
+	void characterLand() {
 		ChangeState ("Game Running");
 		character.beginLanding ();
 	}

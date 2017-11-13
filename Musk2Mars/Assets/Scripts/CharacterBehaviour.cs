@@ -42,7 +42,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		}
 
 		// REMOVE BEFORE PUSHING
-		inputMode = "test";	// Left like this until testing time
+		//inputMode = "test";	// Left like this until testing time
 		score = 0;
 		takeOff = true;
 	}
@@ -72,6 +72,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Physiscs go here
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
 			Vector2 velocityChange = new Vector2(0,0);
 			// Calculate how fast player should be moving 🚀
 			if(inputMode == "tilt") {
@@ -153,7 +154,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
 		//pause game, save state
-
+		gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
 		// Show end game menu
 		gameState.ChangeState ("Out Of Fuel");
 	}
@@ -166,14 +167,19 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Called by CanvasManager when user is to begin landing
 	public void beginLanding() {
 		fuel = initialFuel;
-
+		gameOver();
 	}
 
+	public void continueGame() {
+		fuel = initialFuel;
+		gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
+	}
 	// When the user has finished attempting to land, return to main menu
 	void gameOver() {
 		//save info
 
 		// Fade into Menu screen
 		gameState.ChangeState("End Game");
+		SceneManager.LoadScene ("MainGame");
 	}
 }
