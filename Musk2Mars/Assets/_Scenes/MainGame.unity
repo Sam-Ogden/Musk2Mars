@@ -448,7 +448,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 909793152}
+      - m_Target: {fileID: 1653826254}
         m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
@@ -1014,11 +1014,6 @@ Prefab:
       propertyPath: displayScore
       value: 
       objectReference: {fileID: 4919433}
-    - target: {fileID: 114421304918964520, guid: 890dd2076d44d485a9b210a7fdbd981b,
-        type: 2}
-      propertyPath: character
-      value: 
-      objectReference: {fileID: 909793152}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 890dd2076d44d485a9b210a7fdbd981b, type: 2}
   m_IsPrefabParent: 0
@@ -1154,12 +1149,6 @@ Prefab:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &909793152 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114852673984636652, guid: 2e617cbfff8ed1642bd94496c93714cd,
-    type: 2}
-  m_PrefabInternal: {fileID: 909793151}
-  m_Script: {fileID: 11500000, guid: 7cbf804080a8ee84a9fd605f83260728, type: 3}
 --- !u!1 &957949892
 GameObject:
   m_ObjectHideFlags: 0

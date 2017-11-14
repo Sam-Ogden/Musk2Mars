@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 #if UNITY_ADS
 using UnityEngine.Advertisements; // only compile Ads code on supported platforms
@@ -17,10 +18,15 @@ public class GameStateController : MonoBehaviour {
 	public GameObject continueMenu;
 	public GameObject HUD;
 	public Text displayScore;
-	public CharacterBehaviour character;
 	public static GameStateController gameStateController;
+	public int initialFuel;		// Std fuel in rocket when start game
 
-	private string currState;
+	private static int fuel;
+	private static int coins = 0;
+	private static double score = 0;
+	private static string currState;
+	private int frameCount;
+
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -33,14 +39,26 @@ public class GameStateController : MonoBehaviour {
 		if (Advertisement.isSupported) {
 			Advertisement.Initialize("1582720", true);
 		}
+		fuel = initialFuel;
+	}
+
+	public void StartGame() {
+		ChangeState("Game Running");
 	}
 
 	void Awake() { 
 		DontDestroyOnLoad (gameObject);
 		gameStateController = this;
+		if (gameStateController == null) {
+			DontDestroyOnLoad (gameObject);
+			gameStateController = this;
+		} else if (gameStateController != this) {
+			Destroy (gameObject);
+		}
 	}
 
 	public void ChangeState(string state) {
+		string prevState = currState;
 		currState = state;
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
@@ -48,6 +66,10 @@ public class GameStateController : MonoBehaviour {
 			showCanvasElements(true, true, false);
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
+			saveData();
+			if(prevState != currState) {
+				SceneManager.LoadScene ("MainGame");
+			}
 		} else if (currState == "Video Ad") {
 			showCanvasElements(false, false, false);
 		}
@@ -68,16 +90,28 @@ public class GameStateController : MonoBehaviour {
 
 	void characterContinue() {
 		ChangeState ("Game Running");
-		character.continueGame();
+		fuel = initialFuel;
 	}
 	// Returns to character bahaviour for the landing section of the game
 	void characterLand() {
-		ChangeState ("Game Running");
-		character.beginLanding ();
+		ChangeState ("End Game");
 	}
 
-	public void UpdateScore(double score) {
+	public void UpdateScore() {
+		frameCount++;
+		if((frameCount % 3) == 0) {
+			score = System.Math.Round(score+0.1, 2);
+		}
 		displayScore.text = score+"";
+	}
+
+	public void updateFuel(int newFuel) {
+		fuel = fuel + newFuel;
+		if(fuel <= 0) ChangeState("Out Of Fuel");
+	}
+
+	public void updateCoins(int newCoins) {
+		coins = coins + newCoins;
 	}
 
 	public string GetState() {
@@ -87,5 +121,9 @@ public class GameStateController : MonoBehaviour {
 	public bool gameIsRunning() {
 		if(currState == "Game Running") return true;
 		else return false;
+	}
+
+	void saveData() {
+
 	}
 }

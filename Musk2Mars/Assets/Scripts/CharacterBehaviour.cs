@@ -6,7 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class CharacterBehaviour : MonoBehaviour {
 
-	public float initialFuel;		// Std fuel in rocket when start game
 	public float moveSpeed;			// Horizontal movement speed
 	public float flySpeed;
 	public float maxVelocityChange;	// The max increase in speed at one step (aka accelleration...)
@@ -14,15 +13,12 @@ public class CharacterBehaviour : MonoBehaviour {
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce;  // Force added to character for take off
 	public float touchForce;    // Force used on touch input
+	public int fuelPackValue;   // Amount of fuel gained from a fuel pack
 
-	private float fuel;	// Ship's current level of fuel ⛽️
 	private DataControl data;
 	private GameStateController gameState;
 	private int verticalSpeed;
-	private int coinsCollected;
 	private bool takeOff;
-	private double score;
-	private int frameCount;
 
 	// Use this for initialization
 	void Start () {
@@ -30,48 +26,39 @@ public class CharacterBehaviour : MonoBehaviour {
 		gameState = GameStateController.gameStateController;
 		gameState.ChangeState("End Game");
 
-		fuel = initialFuel;	// Always start with standard fuel level
-		verticalSpeed = 0;
-		coinsCollected = 0;
-
 		if(data.containsKey("inputMethod")) {
 			inputMode = data.getValue("inputMethod"); // GET INPUT MODE FROM DATA STORE
-		} else {
+		} else{
 			data.addPair("inputMethod", "tilt");
 			inputMode = "tilt";
 		}
 
+		if(inputMode == "touch") {
+			GetComponent<Rigidbody2D>().mass = 0.5f;
+		} else {
+			GetComponent<Rigidbody2D>().mass = 0.2f; 
+		}
 		// REMOVE BEFORE PUSHING
 		//inputMode = "test";	// Left like this until testing time
-		score = 0;
 		takeOff = true;
 	}
 		
 	// Update is called once per frame
 	void Update () {
-		// If no more fuel, game is over.
-		fuel--; /* REMOVE */
-		if (fuel == 0) {
-			outOfFuel ();
-		}
-
 		// Take off animation
 		if(takeOff && gameState.gameIsRunning()) {
 			TakeOff();
 		}
-
+			
 		if(gameState.gameIsRunning()) {
-			frameCount++;
-			if((frameCount % 3) == 0) {
-				score = score + 0.1;
-				gameState.UpdateScore(System.Math.Round(score, 2));
-			}
+			gameState.UpdateScore();
 		}
 	}
 
 	// Physiscs go here
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
+			gameState.updateFuel(-1); /* REMOVE */
 			gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
 			Vector2 velocityChange = new Vector2(0,0);
 			// Calculate how fast player should be moving 🚀
@@ -81,6 +68,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			} else if(inputMode == "touch") {
 				// Input taking when using screen sides
 				// Touch input = Input.GetTouch(0);
+
 				if(Input.GetMouseButton(0)) {
 					if(Input.mousePosition.x > Screen.width/2) {
 						velocityChange = MovementForce(touchForce, 0);
@@ -97,11 +85,9 @@ public class CharacterBehaviour : MonoBehaviour {
 
 			GetComponent<Rigidbody2D>().AddForce(velocityChange,
 											ForceMode2D.Force);
+		} else if(gameState.GetState() == "Out Of Fuel") {
+			outOfFuel();
 		}
-	}
-
-	public void StartGame() {
-		gameState.ChangeState("Game Running");
 	}
 
 	Vector2 MovementForce(float forceX, float forceY) {
@@ -134,10 +120,10 @@ public class CharacterBehaviour : MonoBehaviour {
 			Destroy(obj.gameObject);
 			// Play satisfying hit coin sound
 			// Coint coins
-			coinsCollected++;
+			gameState.updateCoins(1);
 		} else if(obj.gameObject.CompareTag ("Fuel")) {
 			Destroy(obj.gameObject);
-			fuel+=100;
+			gameState.updateFuel(150);
 		}
 	}
 
@@ -154,32 +140,16 @@ public class CharacterBehaviour : MonoBehaviour {
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel() {
 		//pause game, save state
-		gameObject.GetComponent<Rigidbody2D>().gravityScale = 0;
-		// Show end game menu
-		gameState.ChangeState ("Out Of Fuel");
+		GetComponent<Rigidbody2D>().gravityScale = 0;
+		GetComponent<Rigidbody2D>().AddForce(new Vector2(0,0), ForceMode2D.Impulse);		// Show end game menu
 	}
 		
-	// Returns vertical speed (used in moving objects down screen - allowing character to stay central)
-	public int getVeticalSpeed() {
-		return verticalSpeed;
-	}
-
 	// Called by CanvasManager when user is to begin landing
 	public void beginLanding() {
-		fuel = initialFuel;
-		gameOver();
+		
 	}
 
 	public void continueGame() {
-		fuel = initialFuel;
 		gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
-	}
-	// When the user has finished attempting to land, return to main menu
-	void gameOver() {
-		//save info
-
-		// Fade into Menu screen
-		gameState.ChangeState("End Game");
-		SceneManager.LoadScene ("MainGame");
 	}
 }

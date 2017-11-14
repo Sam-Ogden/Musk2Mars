@@ -55,4 +55,4 @@ MonoBehaviour:
   continueMenu: {fileID: 0}
   HUD: {fileID: 0}
   displayScore: {fileID: 0}
-  character: {fileID: 0}
+  initialFuel: 900
