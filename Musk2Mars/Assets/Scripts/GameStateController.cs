@@ -37,9 +37,11 @@ public class GameStateController : MonoBehaviour {
 	*/ 
 
 	void Start() {
+		#if UNITY_ADS
 		if (Advertisement.isSupported) {
 			Advertisement.Initialize("1582720", true);
 		}
+		#endif
 		fuel = initialFuel;
 		data = DataControl.control;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
@@ -90,7 +92,9 @@ public class GameStateController : MonoBehaviour {
 
 	// When user clicks continuePlaying button, a video ad is played then the game continues (Landing)
 	public void showVideoAd() {
+		#if UNITY_ADS
 		Advertisement.Show("rewardedVideo");
+		#endif
 		//return to game
 		characterContinue();
 	}
