@@ -26,8 +26,13 @@ public class DataControl : MonoBehaviour {
 		return false;
 	}
 
-	public void addPair(string k, string v) {
-		data.Add (k, v);
+	// Updates a value or adds it if it doesnt exist
+	public void updateVal(string k, string v) {
+		if(data.ContainsKey(k)) {
+			data[k] = v;
+		} else {
+			data.Add (k, v);
+		}
 		save ();
 	}
 

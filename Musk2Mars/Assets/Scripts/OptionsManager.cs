@@ -17,6 +17,6 @@ public class OptionsManager : MonoBehaviour {
 		else input = "touch";
 
 		if (data.containsKey ("inputMethod")) data.setValue ("inputMethod", input);
-		else data.addPair ("inputMethod", input);
+		else data.updateVal ("inputMethod", input);
 	}
 }

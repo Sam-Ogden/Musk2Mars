@@ -24,12 +24,11 @@ public class CharacterBehaviour : MonoBehaviour {
 	void Start () {
 		data = DataControl.control;
 		gameState = GameStateController.gameStateController;
-		gameState.ChangeState("End Game");
 
 		if(data.containsKey("inputMethod")) {
 			inputMode = data.getValue("inputMethod"); // GET INPUT MODE FROM DATA STORE
 		} else{
-			data.addPair("inputMethod", "tilt");
+			data.updateVal("inputMethod", "tilt");
 			inputMode = "tilt";
 		}
 

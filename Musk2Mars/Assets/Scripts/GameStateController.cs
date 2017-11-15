@@ -18,6 +18,7 @@ public class GameStateController : MonoBehaviour {
 	public GameObject continueMenu;
 	public GameObject HUD;
 	public Text displayScore;
+	public Text mainMenuHighScore;
 	public static GameStateController gameStateController;
 	public int initialFuel;		// Std fuel in rocket when start game
 
@@ -26,7 +27,7 @@ public class GameStateController : MonoBehaviour {
 	private static double score = 0;
 	private static string currState;
 	private int frameCount;
-
+	private DataControl data;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -40,6 +41,9 @@ public class GameStateController : MonoBehaviour {
 			Advertisement.Initialize("1582720", true);
 		}
 		fuel = initialFuel;
+		data = DataControl.control;
+		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
+		updateMainMenuHighScore();
 	}
 
 	public void StartGame() {
@@ -70,6 +74,9 @@ public class GameStateController : MonoBehaviour {
 			if(prevState != currState) {
 				SceneManager.LoadScene ("MainGame");
 			}
+			score = 0;
+			coins = 0;
+			Destroy(gameObject);
 		} else if (currState == "Video Ad") {
 			showCanvasElements(false, false, false);
 		}
@@ -123,7 +130,34 @@ public class GameStateController : MonoBehaviour {
 		else return false;
 	}
 
-	void saveData() {
+	public void saveData() {
+		if(data.containsKey("HighScore")) {
+			float currHighScore = System.Convert.ToSingle(data.getValue("HighScore"));
+			if(score > currHighScore) {
+				data.updateVal("HighScore", score.ToString());
+			}
+		} else {
+			data.updateVal("HighScore", score.ToString());
+		}
 
+		if(data.containsKey("Coins")) {
+			int currCoins = System.Int32.Parse(data.getValue("Coins"));
+			int newCoins = currCoins + coins;
+			data.updateVal("Coins", newCoins.ToString());
+		} else {
+			data.updateVal("Coins", coins.ToString());
+		}
+	}
+
+	void updateMainMenuHighScore() {
+		if(data.containsKey("HighScore")) {			
+			mainMenuHighScore.text = "Best: "+ data.getValue("HighScore");
+		} else {
+			mainMenuHighScore.text = "Best: 0";
+		}
 	}
 }
+
+
+
+//
