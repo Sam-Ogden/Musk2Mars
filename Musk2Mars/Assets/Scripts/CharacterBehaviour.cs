@@ -58,16 +58,13 @@ public class CharacterBehaviour : MonoBehaviour {
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
 			gameState.updateFuel(-1); /* REMOVE */
-			gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
+			gameObject.GetComponent<Rigidbody2D>().gravityScale = -4;
 			Vector2 velocityChange = new Vector2(0,0);
 			// Calculate how fast player should be moving 🚀
 			if(inputMode == "tilt") {
 				// Input taking when tilting
 				velocityChange = MovementForce(Input.acceleration.x, 0);
 			} else if(inputMode == "touch") {
-				// Input taking when using screen sides
-				// Touch input = Input.GetTouch(0);
-
 				if(Input.GetMouseButton(0)) {
 					if(Input.mousePosition.x > Screen.width/2) {
 						velocityChange = MovementForce(touchForce, 0);
@@ -149,6 +146,6 @@ public class CharacterBehaviour : MonoBehaviour {
 	}
 
 	public void continueGame() {
-		gameObject.GetComponent<Rigidbody2D>().gravityScale = -2;
+		gameObject.GetComponent<Rigidbody2D>().gravityScale = -4;
 	}
 }

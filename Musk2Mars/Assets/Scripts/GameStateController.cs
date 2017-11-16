@@ -28,6 +28,7 @@ public class GameStateController : MonoBehaviour {
 	private static string currState;
 	private int frameCount;
 	private DataControl data;
+	private bool seenAd;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -46,6 +47,7 @@ public class GameStateController : MonoBehaviour {
 		data = DataControl.control;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
 		updateMainMenuHighScore();
+		seenAd = false;
 	}
 
 	public void StartGame() {
@@ -69,7 +71,8 @@ public class GameStateController : MonoBehaviour {
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
 		} else if(currState == "Out Of Fuel") {
-			showCanvasElements(true, true, false);
+			if(seenAd) characterLand();
+			else showCanvasElements(true, true, false);
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
 			saveData();
@@ -95,6 +98,7 @@ public class GameStateController : MonoBehaviour {
 		#if UNITY_ADS
 		Advertisement.Show("rewardedVideo");
 		#endif
+		seenAd = true;
 		//return to game
 		characterContinue();
 	}
