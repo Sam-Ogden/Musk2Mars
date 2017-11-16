@@ -83,6 +83,8 @@ public class CharacterBehaviour : MonoBehaviour {
 											ForceMode2D.Force);
 		} else if(gameState.GetState() == "Out Of Fuel") {
 			outOfFuel();
+		} else if(gameState.characterIsLanding()) {
+			
 		}
 	}
 

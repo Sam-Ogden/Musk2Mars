@@ -1,7 +1,17 @@
 ﻿/*
 	Contolls game state and shows canvas elements depending on state
 */
-
+/*
+	- Landing state
+		- if watched ad or clicked begin landing change state to landing 
+	- In character Behaviour, need to know if running end game or landing
+	- if landing
+		- Check if score high enough for next level (mars etc) land on nearest level
+		- Fall for 5s (Background animation)
+		- Touch = boost up
+		- If land slowly enough => success
+		- Else blow up, restart from currently reached level
+ */
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,6 +39,7 @@ public class GameStateController : MonoBehaviour {
 	private int frameCount;
 	private DataControl data;
 	private bool seenAd;
+	
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -72,6 +83,8 @@ public class GameStateController : MonoBehaviour {
 			showCanvasElements(false, true, false);
 		} else if(currState == "Out Of Fuel") {
 			if(seenAd) characterLand();
+			else showCanvasElements(true, true, false);
+		} else if(currState == "Landing") {
 			else showCanvasElements(true, true, false);
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
@@ -136,6 +149,11 @@ public class GameStateController : MonoBehaviour {
 	public bool gameIsRunning() {
 		if(currState == "Game Running") return true;
 		else return false;
+	}
+
+	public bool characterIsLanding() {
+		if(currState == "Landing") return true;
+		return false;
 	}
 
 	public void saveData() {
