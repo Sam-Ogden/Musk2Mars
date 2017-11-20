@@ -5,7 +5,7 @@ using UnityEngine;
 public class DespawnBehaviour : MonoBehaviour {
 
 	public float lowerOffset;	// Distance from bottom of screen to despawner
-	public Camera cam;			// To store the main camera
+	private Camera cam;			// To store the main camera
 	private float screenWidth;
 	private float screenHeight;
 

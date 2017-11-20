@@ -929,7 +929,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lowerOffset: 4
-  cam: {fileID: 0}
 --- !u!61 &687547167
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1725,9 +1724,12 @@ MonoBehaviour:
   generator: {fileID: 1261574514790462, guid: 5aabba2aa5cd7444ca8f14ae014fb6f6, type: 2}
   coin: {fileID: 1427042562778256, guid: 85a9b5dff48f240248e2747dd857f96a, type: 2}
   fuel: {fileID: 1643599130702124, guid: f8d65875f7ff44d3aa086fd7eb4cc41b, type: 2}
+  enemy1: {fileID: 1753225483521930, guid: 9e7256325a8b5a047a09bc1366b5e527, type: 2}
   upperOffset: 4
   screenCutoff: 0.8
-  spawnGap: 2
+  collectibleGap: 1
+  maxObstacleGap: 40
+  minObstacleGap: 15
 --- !u!1001 &1630704505
 Prefab:
   m_ObjectHideFlags: 0
