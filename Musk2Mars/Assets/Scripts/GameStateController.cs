@@ -32,7 +32,7 @@ public class GameStateController : MonoBehaviour {
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
-         - Out of fuel     == show continueMenu keep HUD
+         - First Death     == show continueMenu keep HUD
          - End Game        == Show GameMenu hide HUD
          - Video Ad        == Show ad only 
 	*/ 
@@ -70,7 +70,7 @@ public class GameStateController : MonoBehaviour {
 		currState = state;
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
-		} else if(currState == "Out Of Fuel") {
+		} else if(currState == "First Death") {
 			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
 		} else if(currState == "End Game") {
@@ -122,7 +122,7 @@ public class GameStateController : MonoBehaviour {
 
 	public void updateFuel(int newFuel) {
 		fuel = fuel + newFuel;
-		if(fuel <= 0) ChangeState("Out Of Fuel");
+		if(fuel <= 0) ChangeState("First Death");
 	}
 
 	public void updateCoins(int newCoins) {

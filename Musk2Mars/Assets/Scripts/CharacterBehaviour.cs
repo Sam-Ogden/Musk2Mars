@@ -81,7 +81,7 @@ public class CharacterBehaviour : MonoBehaviour {
 
 			GetComponent<Rigidbody2D>().AddForce(velocityChange,
 											ForceMode2D.Force);
-		} else if(gameState.GetState() == "Out Of Fuel") {
+		} else if(gameState.GetState() == "First Death") {
 			outOfFuel();
 		}
 	}
@@ -120,6 +120,8 @@ public class CharacterBehaviour : MonoBehaviour {
 		} else if(obj.gameObject.CompareTag ("Fuel")) {
 			Destroy(obj.gameObject);
 			gameState.updateFuel(150);
+		} else if(obj.gameObject.CompareTag ("Obstacle")) {
+			gameState.ChangeState("First Death");
 		}
 	}
 

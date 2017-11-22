@@ -29,14 +29,24 @@ public class SpawnBehaviour : MonoBehaviour {
 	// Patterns should be added in reverse vertical order
 	private byte[,,] patterns = {
 		{
-			{1,1,1,0,0,0},
-			{1,1,1,0,0,0},
-			{0,1,2,1,0,0},
-			{0,1,1,1,0,0},
-			{0,0,1,1,1,0},
-			{0,0,1,1,1,0},
-			{0,0,0,1,1,1},
-			{0,0,0,1,1,1}
+			{0,0,0,0,0,0},
+			{1,1,0,0,0,0},
+			{1,1,0,0,0,0},
+			{0,0,1,1,0,0},
+			{0,0,1,2,0,0},
+			{0,0,0,0,1,1},
+			{0,0,0,0,1,1},
+			{0,0,0,0,0,0}
+		},
+		{
+			{0,0,0,1,1,0},
+			{0,0,0,1,1,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,0,0},
+			{0,1,1,0,0,0},
+			{0,1,1,0,0,0},
+			{0,0,0,0,0,0},
+			{0,0,0,0,2,0}
 		}
 	};
 	
@@ -98,7 +108,7 @@ public class SpawnBehaviour : MonoBehaviour {
 	}
 
 	void addPattern() {
-		int chosen = Random.Range(0, patterns.GetLength(0) - 1);
+		int chosen = Random.Range(0, patterns.GetLength(0));
 		for(int i = 0; i < patterns.GetLength(1); i ++) {
 			lines.Enqueue(new int[] {chosen, i});
 		}
