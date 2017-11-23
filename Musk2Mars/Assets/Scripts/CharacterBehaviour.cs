@@ -13,7 +13,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public string inputMode;	// Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce;  // Force added to character for take off
 	public float touchForce;    // Force used on touch input
-	public int fuelPackValue;   // Amount of fuel gained from a fuel pack
+	public float fuelPackValue;   // Amount of fuel gained from a fuel pack
 
 	private DataControl data;
 	private GameStateController gameState;
@@ -35,7 +35,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		if(inputMode == "touch") {
 			GetComponent<Rigidbody2D>().mass = 0.5f;
 		} else {
-			GetComponent<Rigidbody2D>().mass = 0.2f; 
+			GetComponent<Rigidbody2D>().mass = 0.5f; 
 		}
 		// REMOVE BEFORE PUSHING
 		//inputMode = "test";	// Left like this until testing time
@@ -51,19 +51,19 @@ public class CharacterBehaviour : MonoBehaviour {
 			
 		if(gameState.gameIsRunning()) {
 			gameState.UpdateScore();
+			gameState.updateFuel(-1f);
 		}
 	}
 
 	// Physiscs go here
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
-			gameState.updateFuel(-1); /* REMOVE */
 			gameObject.GetComponent<Rigidbody2D>().gravityScale = -4;
 			Vector2 velocityChange = new Vector2(0,0);
 			// Calculate how fast player should be moving 🚀
 			if(inputMode == "tilt") {
 				// Input taking when tilting
-				velocityChange = MovementForce(Input.acceleration.x, 0);
+				velocityChange = MovementForce(Input.acceleration.x * 1.5f, 0);
 			} else if(inputMode == "touch") {
 				if(Input.GetMouseButton(0)) {
 					if(Input.mousePosition.x > Screen.width/2) {
@@ -119,7 +119,7 @@ public class CharacterBehaviour : MonoBehaviour {
 			gameState.updateCoins(1);
 		} else if(obj.gameObject.CompareTag ("Fuel")) {
 			Destroy(obj.gameObject);
-			gameState.updateFuel(150);
+			gameState.updateFuel(150f);
 		} else if(obj.gameObject.CompareTag ("Obstacle")) {
 			gameState.ChangeState("First Death");
 		}

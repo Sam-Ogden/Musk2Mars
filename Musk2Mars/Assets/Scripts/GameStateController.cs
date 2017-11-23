@@ -18,11 +18,12 @@ public class GameStateController : MonoBehaviour {
 	public GameObject continueMenu;
 	public GameObject HUD;
 	public Text displayScore;
+	public Slider fuelBar;
 	public Text mainMenuHighScore;
 	public static GameStateController gameStateController;
-	public int initialFuel;		// Std fuel in rocket when start game
-
-	private static int fuel;
+	public float initialFuel;		// Std fuel in rocket when start game
+	public float maxFuel;
+	private static float fuel;
 	private static int coins = 0;
 	private static double score = 0;
 	private static string currState;
@@ -120,8 +121,12 @@ public class GameStateController : MonoBehaviour {
 		displayScore.text = score+"";
 	}
 
-	public void updateFuel(int newFuel) {
+	public void updateFuel(float newFuel) {
 		fuel = fuel + newFuel;
+		if(fuel > maxFuel) {
+			fuel = maxFuel;
+		}
+		fuelBar.value = fuel / maxFuel;
 		if(fuel <= 0) ChangeState("First Death");
 	}
 
