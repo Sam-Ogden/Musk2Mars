@@ -59,31 +59,36 @@ public class CharacterBehaviour : MonoBehaviour {
 	void FixedUpdate() {
 		if(gameState.gameIsRunning()) {
 			gameObject.GetComponent<Rigidbody2D>().gravityScale = -4;
-			Vector2 velocityChange = new Vector2(0,0);
-			// Calculate how fast player should be moving 🚀
-			if(inputMode == "tilt") {
-				// Input taking when tilting
-				velocityChange = MovementForce(Input.acceleration.x * 1.5f, 0);
-			} else if(inputMode == "touch") {
-				if(Input.GetMouseButton(0)) {
-					if(Input.mousePosition.x > Screen.width/2) {
-						velocityChange = MovementForce(touchForce, 0);
-					} else {
-						velocityChange = MovementForce(-touchForce, 0);
-					}
-				} else {
-					velocityChange = MovementForce(0, 0);
-				}
-			} else {
-				// Test input
-				velocityChange = MovementForce(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-			}
-
-			GetComponent<Rigidbody2D>().AddForce(velocityChange,
-											ForceMode2D.Force);
+			MoveCharacter();
 		} else if(gameState.GetState() == "First Death") {
 			outOfFuel();
+		} else if(gameState.isLanding()) {
+			Landing();
 		}
+	}
+
+	void MoveCharacter() {
+		Vector2 velocityChange = new Vector2(0,0);
+		// Calculate how fast player should be moving 🚀
+		if(inputMode == "tilt") {
+			// Input taking when tilting
+			velocityChange = MovementForce(Input.acceleration.x * 1.5f, 0);
+		} else if(inputMode == "touch") {
+			if(Input.GetMouseButton(0)) {
+				if(Input.mousePosition.x > Screen.width/2) {
+					velocityChange = MovementForce(touchForce, 0);
+				} else {
+					velocityChange = MovementForce(-touchForce, 0);
+				}
+			} else {
+				velocityChange = MovementForce(0, 0);
+			}
+		} else {
+			// Test input
+			velocityChange = MovementForce(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		}
+		GetComponent<Rigidbody2D>().AddForce(velocityChange,
+											ForceMode2D.Force);
 	}
 
 	Vector2 MovementForce(float forceX, float forceY) {
@@ -143,8 +148,9 @@ public class CharacterBehaviour : MonoBehaviour {
 	}
 		
 	// Called by CanvasManager when user is to begin landing
-	public void beginLanding() {
-		
+	public void Landing() {
+		GetComponent<Rigidbody2D>().gravityScale = 1;
+		MoveCharacter();	
 	}
 
 	public void continueGame() {

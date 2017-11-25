@@ -72,8 +72,10 @@ public class GameStateController : MonoBehaviour {
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
 		} else if(currState == "First Death") {
-			if(seenAd) characterLand();
+			if(seenAd) ChangeState("Landing");
 			else showCanvasElements(true, true, false);
+		} else if(currState == "Landing") {
+			showCanvasElements(false, false, false);
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
 			saveData();
@@ -110,7 +112,7 @@ public class GameStateController : MonoBehaviour {
 	}
 	// Returns to character bahaviour for the landing section of the game
 	void characterLand() {
-		ChangeState ("End Game");
+		ChangeState ("Landing");
 	}
 
 	public void UpdateScore() {
@@ -168,5 +170,10 @@ public class GameStateController : MonoBehaviour {
 		} else {
 			mainMenuHighScore.text = "Best: 0";
 		}
+	}
+
+	public bool isLanding() {
+		if(currState == "Landing") return true;
+		return false;
 	}
 }

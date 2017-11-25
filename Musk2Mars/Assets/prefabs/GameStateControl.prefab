@@ -55,4 +55,7 @@ MonoBehaviour:
   continueMenu: {fileID: 0}
   HUD: {fileID: 0}
   displayScore: {fileID: 0}
-  initialFuel: 900
+  fuelBar: {fileID: 0}
+  mainMenuHighScore: {fileID: 0}
+  initialFuel: 200
+  maxFuel: 900

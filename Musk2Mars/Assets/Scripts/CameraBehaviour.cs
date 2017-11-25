@@ -11,8 +11,11 @@ public class CameraBehaviour : MonoBehaviour {
  	private Transform playerTransform;
  	private float screenHeight;
  	private float screenWidth;
+	private GameStateController gameState;
+
 	// Use this for initialization
 	void Start () {
+		gameState = GameStateController.gameStateController;
 		playerTransform = player.GetComponent<Transform>();
  		forceY = 0;
  		forceX = 0;
@@ -35,20 +38,26 @@ public class CameraBehaviour : MonoBehaviour {
 	// Fixed Update is used for physics stuff
 	void FixedUpdate (){
  		// Trying to keep rocket height, always same proportion of screen
- 		if(playerTransform.position.y > Camera.main.transform.position.y - screenHeight/4) {
- 			// Divide for smooth movement
- 			forceY = Mathf.Abs(Camera.main.transform.position.y - 
-			 			(screenHeight/4) - playerTransform.position.y);
+		if(gameState.isLanding()) {
+			if(playerTransform.position.y < Camera.main.transform.position.y + screenHeight/4) {
+				// Divide for smooth movement
+				forceY = -Mathf.Abs(Camera.main.transform.position.y + 
+							(screenHeight/4) - playerTransform.position.y);
+			} else {
+				forceY = Mathf.Abs(Camera.main.transform.position.y - 
+							(screenHeight/4) - playerTransform.position.y);
+			}
 		} else {
-			forceY = 0;
+			if(playerTransform.position.y > Camera.main.transform.position.y - screenHeight/4) {
+				// Divide for smooth movement
+				forceY = Mathf.Abs(Camera.main.transform.position.y - 
+							(screenHeight/4) - playerTransform.position.y);
+			} else {
+				forceY = 0;
+			}
 		}
  
  		Vector3 moveCam = new Vector3(forceX, forceY, 0);
  		this.transform.position += moveCam;
- 		getInput();	// Only used for testing;
- 	}
- 
- 	void getInput() {
- 	
  	}
 }
