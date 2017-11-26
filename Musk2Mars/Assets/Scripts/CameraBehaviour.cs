@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
-
-
+	
 	public GameObject player;
  	private float forceY;
  	private float forceX;
@@ -19,7 +18,7 @@ public class CameraBehaviour : MonoBehaviour {
 		playerTransform = player.GetComponent<Transform>();
  		forceY = 0;
  		forceX = 0;
-
+		
 		// Calculate screen dimensions
  		var screenBottomLeft = Camera.main.ViewportToWorldPoint(
 			 new Vector3(0, 0, transform.position.z));
@@ -39,13 +38,18 @@ public class CameraBehaviour : MonoBehaviour {
 	void FixedUpdate (){
  		// Trying to keep rocket height, always same proportion of screen
 		if(gameState.isLanding()) {
-			if(playerTransform.position.y < Camera.main.transform.position.y + screenHeight/4) {
-				// Divide for smooth movement
-				forceY = -Mathf.Abs(Camera.main.transform.position.y + 
-							(screenHeight/4) - playerTransform.position.y);
+			//check if ground on screen (difference = 5)
+			if(gameState.getCamFloorDistance() > Camera.main.orthographicSize) {
+				if(playerTransform.position.y < Camera.main.transform.position.y + screenHeight/4) {
+					// Divide for smooth movement
+					forceY = -Mathf.Abs(Camera.main.transform.position.y + 
+								(screenHeight/4) - playerTransform.position.y);
+				} else {
+					forceY = Mathf.Abs(Camera.main.transform.position.y + 
+								(screenHeight/4) - playerTransform.position.y);
+				}
 			} else {
-				forceY = Mathf.Abs(Camera.main.transform.position.y - 
-							(screenHeight/4) - playerTransform.position.y);
+				forceY = 0;
 			}
 		} else {
 			if(playerTransform.position.y > Camera.main.transform.position.y - screenHeight/4) {

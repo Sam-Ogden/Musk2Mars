@@ -23,6 +23,8 @@ public class GameStateController : MonoBehaviour {
 	public static GameStateController gameStateController;
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float maxFuel;
+	public GameObject ground;
+	public int landDistance;
 	private static float fuel;
 	private static int coins = 0;
 	private static double score = 0;
@@ -30,13 +32,14 @@ public class GameStateController : MonoBehaviour {
 	private int frameCount;
 	private DataControl data;
 	private bool seenAd;
+	private GameObject landingGround;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
          - First Death     == show continueMenu keep HUD
          - End Game        == Show GameMenu hide HUD
          - Video Ad        == Show ad only 
-	*/ 
+	*/ 	
 
 	void Start() {
 		#if UNITY_ADS
@@ -72,7 +75,7 @@ public class GameStateController : MonoBehaviour {
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
 		} else if(currState == "First Death") {
-			if(seenAd) ChangeState("Landing");
+			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
 		} else if(currState == "Landing") {
 			showCanvasElements(false, false, false);
@@ -105,7 +108,7 @@ public class GameStateController : MonoBehaviour {
 		//return to game
 		characterContinue();
 	}
-
+	
 	void characterContinue() {
 		ChangeState ("Game Running");
 		fuel = initialFuel;
@@ -113,8 +116,14 @@ public class GameStateController : MonoBehaviour {
 	// Returns to character bahaviour for the landing section of the game
 	void characterLand() {
 		ChangeState ("Landing");
+		// spawn ground below camera
+		Vector3 spawnLocation = new Vector3(0, Camera.main.transform.position.y-landDistance, 0);
+		landingGround = Instantiate(ground, spawnLocation, Quaternion.identity);
+		// Sets foregrounds tag so can detect landing
+		landingGround.transform.Find("ForeGround").tag = "LandingGround";
 	}
 
+	// Update score once every 3 frames
 	public void UpdateScore() {
 		frameCount++;
 		if((frameCount % 3) == 0) {
@@ -145,6 +154,7 @@ public class GameStateController : MonoBehaviour {
 		else return false;
 	}
 
+	// Save score to data control
 	public void saveData() {
 		if(data.containsKey("HighScore")) {
 			float currHighScore = System.Convert.ToSingle(data.getValue("HighScore"));
@@ -175,5 +185,11 @@ public class GameStateController : MonoBehaviour {
 	public bool isLanding() {
 		if(currState == "Landing") return true;
 		return false;
+	}
+
+	// Returns the distance between clone floor and camera
+	public float getCamFloorDistance() {
+		Debug.Log(Camera.main.transform.position.y - landingGround.transform.position.y);
+		return Camera.main.transform.position.y - landingGround.transform.position.y;
 	}
 }
