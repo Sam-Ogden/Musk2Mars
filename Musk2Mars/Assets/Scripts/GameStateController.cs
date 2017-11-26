@@ -42,11 +42,7 @@ public class GameStateController : MonoBehaviour {
 	private int frameCount;
 	private DataControl data;
 	private bool seenAd;
-<<<<<<< HEAD
 	private GameObject landingGround;
-=======
-	
->>>>>>> 0b8aab12b2f1bcaf9bf756f81eb8916f98b377e6
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -92,11 +88,7 @@ public class GameStateController : MonoBehaviour {
 			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
 		} else if(currState == "Landing") {
-<<<<<<< HEAD
 			showCanvasElements(false, false, false);
-=======
-			else showCanvasElements(true, true, false);
->>>>>>> 0b8aab12b2f1bcaf9bf756f81eb8916f98b377e6
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
 			saveData();
