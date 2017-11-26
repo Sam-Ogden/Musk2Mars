@@ -56,7 +56,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDrag: 1
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -101,13 +101,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf804080a8ee84a9fd605f83260728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalFlySpeed: 400
-  verticalFlySpeed: 30
-  landBoostForce: 9.8
-  maxVelocityChange: 20
+  horizontalFlySpeed: 600
+  verticalFlySpeed: 50
+  landBoostForce: 18
+  maxVelocityChange: 50
   maxFlyChange: 30
   inputMode: test
-  takeOffForce: 10
+  takeOffForce: 0.2
   fuelPackValue: 500
 --- !u!198 &198135258744049580
 ParticleSystem:

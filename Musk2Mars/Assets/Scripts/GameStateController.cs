@@ -33,6 +33,7 @@ public class GameStateController : MonoBehaviour {
 	public static GameStateController gameStateController;
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float maxFuel;
+	public float initialLandingFuel;
 	public GameObject ground;
 	public int landDistance;
 	private static float fuel;
@@ -43,6 +44,7 @@ public class GameStateController : MonoBehaviour {
 	private DataControl data;
 	private bool seenAd;
 	private GameObject landingGround;
+	private bool outOfLandingFuel;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -59,6 +61,7 @@ public class GameStateController : MonoBehaviour {
 		#endif
 		fuel = initialFuel;
 		data = DataControl.control;
+		outOfLandingFuel = false;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
 		updateMainMenuHighScore();
 		seenAd = false;
@@ -88,7 +91,7 @@ public class GameStateController : MonoBehaviour {
 			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
 		} else if(currState == "Landing") {
-			showCanvasElements(false, false, false);
+			showCanvasElements(false, true, false);
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
 			saveData();
@@ -121,13 +124,15 @@ public class GameStateController : MonoBehaviour {
 	
 	void characterContinue() {
 		ChangeState ("Game Running");
-		fuel = initialFuel;
+		updateFuel(initialFuel);
 	}
 	// Returns to character bahaviour for the landing section of the game
 	void characterLand() {
 		ChangeState ("Landing");
+		fuel = 0;
+		updateFuel(initialLandingFuel);
 		// spawn ground below camera
-		Vector3 spawnLocation = new Vector3(0, Camera.main.transform.position.y-landDistance, 0);
+		Vector3 spawnLocation = new Vector3(0, Camera.main.transform.position.y-landDistance, -1);
 		landingGround = Instantiate(ground, spawnLocation, Quaternion.identity);
 		// Sets foregrounds tag so can detect landing
 		landingGround.transform.Find("ForeGround").tag = "LandingGround";
@@ -148,7 +153,7 @@ public class GameStateController : MonoBehaviour {
 			fuel = maxFuel;
 		}
 		fuelBar.value = fuel / maxFuel;
-		if(fuel <= 0) ChangeState("First Death");
+		if(fuel <= 0 && currState != "Landing") ChangeState("First Death");
 	}
 
 	public void updateCoins(int newCoins) {
@@ -197,9 +202,12 @@ public class GameStateController : MonoBehaviour {
 		return false;
 	}
 
+	public bool haveFuel() {
+		if(fuel > 0) return true;
+		return false;
+	}
 	// Returns the distance between clone floor and camera
 	public float getCamFloorDistance() {
-		Debug.Log(Camera.main.transform.position.y - landingGround.transform.position.y);
 		return Camera.main.transform.position.y - landingGround.transform.position.y;
 	}
 }

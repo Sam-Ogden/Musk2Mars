@@ -57,7 +57,8 @@ MonoBehaviour:
   displayScore: {fileID: 0}
   fuelBar: {fileID: 0}
   mainMenuHighScore: {fileID: 0}
-  initialFuel: 500
-  maxFuel: 900
+  initialFuel: 1000
+  maxFuel: 1000
+  initialLandingFuel: 200
   ground: {fileID: 0}
   landDistance: 20

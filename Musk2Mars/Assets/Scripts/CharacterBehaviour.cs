@@ -38,7 +38,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		//inputMode = "test";
+		inputMode = "test";
 		takeOff = true;
 	}
 
@@ -104,7 +104,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	// Collision handler
 	void OnCollisionEnter2D (Collision2D obj) {
 		if (obj.gameObject.CompareTag ("Coin")) {
-			//Coin collected remove from game
+			// Coin collected remove from game
 			Destroy (obj.gameObject);
 			// Play satisfying hit coin sound
 			// Coint coins
@@ -116,6 +116,10 @@ public class CharacterBehaviour : MonoBehaviour {
 			gameState.ChangeState ("First Death");
 		} else if(obj.gameObject.CompareTag ("LandingGround")) {
 			// Did we land safely?
+			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 1.5) {
+				Debug.Log("SUCCESSFUL LANDING");
+				gameState.updateCoins(200);
+			}
 			gameState.ChangeState("End Game");
 		}
 	}
@@ -137,11 +141,12 @@ public class CharacterBehaviour : MonoBehaviour {
 		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, 0), ForceMode2D.Impulse); // Show end game menu
 	}
 
-	// Called by CanvasManager when user is to begin landing
+	// Handles landing logic
 	public void Landing () {
 		GetComponent<Rigidbody2D> ().gravityScale = 1;
 		MoveCharacter ();
-		if (Input.GetMouseButton (0)) {
+		if (Input.GetMouseButton (0) && gameState.haveFuel()) {
+			gameState.updateFuel(-1f);
 			GetComponent<Rigidbody2D> ().AddForce (transform.up * landBoostForce);
 		}
 	}
