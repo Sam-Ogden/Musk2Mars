@@ -44,7 +44,6 @@ public class GameStateController : MonoBehaviour {
 	private DataControl data;
 	private bool seenAd;
 	private GameObject landingGround;
-	private bool outOfLandingFuel;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -61,7 +60,6 @@ public class GameStateController : MonoBehaviour {
 		#endif
 		fuel = initialFuel;
 		data = DataControl.control;
-		outOfLandingFuel = false;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
 		updateMainMenuHighScore();
 		seenAd = false;
@@ -115,13 +113,32 @@ public class GameStateController : MonoBehaviour {
 	// When user clicks continuePlaying button, a video ad is played then the game continues (Landing)
 	public void showVideoAd() {
 		#if UNITY_ADS
-		Advertisement.Show("rewardedVideo");
+		if (Advertisement.IsReady("rewardedVideo")) {
+			var options = new ShowOptions { resultCallback = HandleShowAdResult };
+			Advertisement.Show("rewardedVideo", options);
+		}
 		#endif
-		seenAd = true;
-		//return to game
-		characterContinue();
 	}
-	
+
+	// Callback function for when unity finishes showing ad in showVideoAd
+	private void HandleShowAdResult(ShowResult result) {
+		switch (result)
+		{
+			case ShowResult.Finished:
+			Debug.Log("The ad was successfully shown.");
+			characterContinue();
+			seenAd = true;
+			break;
+			case ShowResult.Skipped:
+			Debug.Log("The ad was skipped before reaching the end.");
+			characterContinue();
+			break;
+			case ShowResult.Failed:
+			Debug.LogError("The ad failed to be shown.");
+			characterContinue();
+			break;
+		}
+	}
 	void characterContinue() {
 		ChangeState ("Game Running");
 		updateFuel(initialFuel);

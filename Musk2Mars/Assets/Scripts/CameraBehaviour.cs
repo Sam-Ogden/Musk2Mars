@@ -9,7 +9,7 @@ public class CameraBehaviour : MonoBehaviour {
  	private float forceX;
  	private Transform playerTransform;
  	private float screenHeight;
- 	private float screenWidth;
+ 	//private float screenWidth;
 	private GameStateController gameState;
 
 	// Use this for initialization
@@ -25,7 +25,7 @@ public class CameraBehaviour : MonoBehaviour {
  		var screenTopRight = Camera.main.ViewportToWorldPoint(
 			 new Vector3(1, 1, transform.position.z));
  		
- 		screenWidth = screenTopRight.x - screenBottomLeft.x;
+ 		//screenWidth = screenTopRight.x - screenBottomLeft.x;
  		screenHeight = screenTopRight.y - screenBottomLeft.y;
 	}
 	

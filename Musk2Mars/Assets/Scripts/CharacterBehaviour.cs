@@ -20,7 +20,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	private GameStateController gameState;
 	private int verticalSpeed;
 	private bool takeOff;
-	private float screenWidth;
+	//private float screenWidth;
 	private float screenHeight;
 
 	// Use this for initialization
@@ -29,7 +29,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		var screenBottomLeft = cam.ViewportToWorldPoint (new Vector3 (0, 0, transform.position.z));
 		var screenTopRight = cam.ViewportToWorldPoint (new Vector3 (1, 1, transform.position.z));
 
-		screenWidth = screenTopRight.x - screenBottomLeft.x;
+		//screenWidth = screenTopRight.x - screenBottomLeft.x;
 		screenHeight = screenTopRight.y - screenBottomLeft.y;
 		data = DataControl.control;
 		gameState = GameStateController.gameStateController;
@@ -52,6 +52,8 @@ public class CharacterBehaviour : MonoBehaviour {
 			gameState.UpdateScore ();
 			gameState.updateFuel (-1f);
 		}
+
+		Debug.Log(GetComponent<Rigidbody2D> ().velocity);
 	}
 
 	// Physiscs go here
@@ -137,7 +139,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	// GAME OVER - pause game and Show view ad option to continue game
 	void outOfFuel () {
 		//pause game, save state
-		GetComponent<Rigidbody2D> ().gravityScale = 0;
+		GetComponent<Rigidbody2D> ().gravityScale = 0; // stop falling on first death
 		GetComponent<Rigidbody2D> ().AddForce (new Vector2 (0, 0), ForceMode2D.Impulse); // Show end game menu
 	}
 
@@ -152,6 +154,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	}
 
 	public void continueGame () {
+		GetComponent<Rigidbody2D> ().gravityScale = 1;
 		gameObject.GetComponent<Rigidbody2D> ().AddForce (transform.up * verticalFlySpeed);
 	}
 }

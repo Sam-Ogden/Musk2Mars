@@ -1532,21 +1532,6 @@ Prefab:
       propertyPath: ground
       value: 
       objectReference: {fileID: 776595095}
-    - target: {fileID: 114421304918964520, guid: 890dd2076d44d485a9b210a7fdbd981b,
-        type: 2}
-      propertyPath: initialLandingFuel
-      value: 300
-      objectReference: {fileID: 0}
-    - target: {fileID: 114421304918964520, guid: 890dd2076d44d485a9b210a7fdbd981b,
-        type: 2}
-      propertyPath: initialFuel
-      value: 1000
-      objectReference: {fileID: 0}
-    - target: {fileID: 114421304918964520, guid: 890dd2076d44d485a9b210a7fdbd981b,
-        type: 2}
-      propertyPath: maxFuel
-      value: 1000
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 890dd2076d44d485a9b210a7fdbd981b, type: 2}
   m_IsPrefabParent: 0

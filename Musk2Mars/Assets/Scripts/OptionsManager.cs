@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class OptionsManager : MonoBehaviour {
 
-	private DataControl data = DataControl.control;
+	//private DataControl data = DataControl.control;
 
 	void Start() {
 	}
