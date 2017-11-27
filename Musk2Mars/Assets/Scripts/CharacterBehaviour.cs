@@ -52,8 +52,6 @@ public class CharacterBehaviour : MonoBehaviour {
 			gameState.UpdateScore ();
 			gameState.updateFuel (-1f);
 		}
-
-		Debug.Log(GetComponent<Rigidbody2D> ().velocity);
 	}
 
 	// Physiscs go here
