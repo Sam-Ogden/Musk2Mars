@@ -35,6 +35,7 @@ public class GameStateController : MonoBehaviour {
 	public float maxFuel;
 	public float initialLandingFuel;
 	public GameObject ground;
+	public GameObject landingPad;
 	public int landDistance;
 	private static float fuel;
 	private static int coins = 0;
@@ -44,6 +45,7 @@ public class GameStateController : MonoBehaviour {
 	private DataControl data;
 	private bool seenAd;
 	private GameObject landingGround;
+	private bool successfullyLanded;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -62,6 +64,7 @@ public class GameStateController : MonoBehaviour {
 		data = DataControl.control;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
 		updateMainMenuHighScore();
+		successfullyLanded = false;
 		seenAd = false;
 	}
 
@@ -149,10 +152,15 @@ public class GameStateController : MonoBehaviour {
 		fuel = 0;
 		updateFuel(initialLandingFuel);
 		// spawn ground below camera
-		Vector3 spawnLocation = new Vector3(0, Camera.main.transform.position.y-landDistance, -1);
-		landingGround = Instantiate(ground, spawnLocation, Quaternion.identity);
+		float yPos = Camera.main.transform.position.y - landDistance;
+		Vector3 groundLoc = new Vector3(0, yPos, -1);
+		Vector3 padLoc = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0,Screen.width),0,0));
+		padLoc.y = yPos+0.5f;
+		padLoc.z = -1;
+		landingGround = Instantiate(ground, groundLoc, Quaternion.identity);
+		Instantiate(landingPad, padLoc, Quaternion.identity);
 		// Sets foregrounds tag so can detect landing
-		landingGround.transform.Find("ForeGround").tag = "LandingGround";
+		landingGround.transform.Find("ForeGround").tag = "LandingGround";		
 	}
 
 	// Update score once every 3 frames
@@ -226,5 +234,15 @@ public class GameStateController : MonoBehaviour {
 	// Returns the distance between clone floor and camera
 	public float getCamFloorDistance() {
 		return Camera.main.transform.position.y - landingGround.transform.position.y;
+	}
+
+	// Successful landing, reward player double or 1.5x coins
+	public void successfulLanding(float coinMultiplier) {	
+		// Make sure only multiple coins once (each ship clone calls this method)
+		if(!successfullyLanded) {
+			coins = (int)Mathf.Round(coins*coinMultiplier);
+		}	
+		successfullyLanded = true;
+		
 	}
 }

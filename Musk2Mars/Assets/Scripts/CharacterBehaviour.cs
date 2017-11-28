@@ -118,11 +118,17 @@ public class CharacterBehaviour : MonoBehaviour {
 			}
 		} else if(obj.gameObject.CompareTag ("LandingGround")) {
 			// Did we land safely?
-			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 1.5) {
+			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 2.2) {
 				Debug.Log("SUCCESSFUL LANDING");
-				gameState.updateCoins(200);
+				gameState.successfulLanding(1.5f);
 			}
 			gameState.ChangeState("End Game");
+		} else if(obj.gameObject.CompareTag ("LandingPad") && gameState.isLanding()) {
+			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 2.2) {
+				Debug.Log("SUPER SUCCESSFUL LANDING");
+				gameState.successfulLanding(2f);
+			}
+			gameState.ChangeState("End Game");			
 		}
 	}
 
