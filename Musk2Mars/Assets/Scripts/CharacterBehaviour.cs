@@ -113,7 +113,9 @@ public class CharacterBehaviour : MonoBehaviour {
 			Destroy (obj.gameObject);
 			gameState.updateFuel (150f);
 		} else if (obj.gameObject.CompareTag ("Obstacle")) {
-			gameState.ChangeState ("First Death");
+			if(!gameState.isLanding()) {
+				gameState.ChangeState ("First Death");
+			}
 		} else if(obj.gameObject.CompareTag ("LandingGround")) {
 			// Did we land safely?
 			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 1.5) {
