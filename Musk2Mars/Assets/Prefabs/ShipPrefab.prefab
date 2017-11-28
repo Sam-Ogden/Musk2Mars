@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4382554345584070}
   - component: {fileID: 212893553542753722}
   - component: {fileID: 50718419752545986}
-  - component: {fileID: 61420152168289002}
+  - component: {fileID: 60744989577263840}
   - component: {fileID: 198135258744049580}
   - component: {fileID: 199303689102725426}
   - component: {fileID: 114852673984636652}
@@ -39,7 +39,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1847352916723950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.43, y: -2.87, z: 0}
+  m_LocalPosition: {x: 4.327, y: -2.27, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -65,8 +65,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!61 &61420152168289002
-BoxCollider2D:
+--- !u!60 &60744989577263840
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -77,7 +77,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02135098, y: -0.13038707}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -87,9 +87,31 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.65706515, y: 4.3318906}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.00085544586, y: -2.2314458}
+      - {x: 0.29150772, y: -2.2305903}
+      - {x: 0.34000015, y: -2.0936656}
+      - {x: 0.33747387, y: 1.6283755}
+      - {x: 0.334013, y: 1.6579423}
+      - {x: 0.30331993, y: 1.7650878}
+      - {x: 0.27345753, y: 1.8321733}
+      - {x: 0.18681145, y: 2.0115728}
+      - {x: 0.11557865, y: 2.129894}
+      - {x: 0.05724621, y: 2.2090821}
+      - {x: 0.029259682, y: 2.2296298}
+      - {x: -0.008426666, y: 2.2374969}
+      - {x: -0.04632187, y: 2.2334287}
+      - {x: -0.0839138, y: 2.2095757}
+      - {x: -0.11928272, y: 2.169801}
+      - {x: -0.14997101, y: 2.1171951}
+      - {x: -0.2113285, y: 1.9912448}
+      - {x: -0.2883501, y: 1.8203864}
+      - {x: -0.3391447, y: 1.658329}
+      - {x: -0.3414135, y: -2.0951762}
+      - {x: -0.29124165, y: -2.2323012}
+      - {x: 0, y: -2.2314458}
+      - {x: 0, y: -2.1399999}
 --- !u!114 &114852673984636652
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -119,7 +141,7 @@ ParticleSystem:
   lengthInSec: 2
   simulationSpeed: 0.7
   stopAction: 0
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -169,7 +191,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2066470195
+  randomSeed: -1218639399
   InitialModule:
     serializedVersion: 3
     enabled: 1
