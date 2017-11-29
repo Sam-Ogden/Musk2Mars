@@ -15,7 +15,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	public string inputMode; // Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce; // Force added to character for take off
 	public float fuelPackValue; // Amount of fuel gained from a fuel pack
-
+	public ParticleSystem particles;
 	private DataControl data;
 	private GameStateController gameState;
 	private int verticalSpeed;
@@ -38,8 +38,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		inputMode = "test";
+		//inputMode = "test";
 		takeOff = true;
+		particles.Stop();
 	}
 
 	// Update is called once per frame
@@ -48,6 +49,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		if (takeOff && gameState.gameIsRunning ()) {
 			TakeOff ();
 			gameState.UpdateScore ();
+			particles.Play();
 		} else if (!takeOff && gameState.gameIsRunning ()) {
 			gameState.UpdateScore ();
 			gameState.updateFuel (-1f);
@@ -153,9 +155,11 @@ public class CharacterBehaviour : MonoBehaviour {
 	public void Landing () {
 		GetComponent<Rigidbody2D> ().gravityScale = 1;
 		MoveCharacter ();
+		particles.Stop();
 		if (Input.GetMouseButton (0) && gameState.haveFuel()) {
 			gameState.updateFuel(-1f);
 			GetComponent<Rigidbody2D> ().AddForce (transform.up * landBoostForce);
+			particles.Play();
 		}
 	}
 

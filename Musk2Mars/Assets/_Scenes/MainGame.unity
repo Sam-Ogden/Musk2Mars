@@ -1560,6 +1560,91 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ShapeModule.type
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: randomSeed
+      value: 941781722
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: startDelay.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ShapeModule.angle
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: randomSeed
+      value: 97545884
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.r
+      value: 0.6551719
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key0.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.ctime1
+      value: 65535
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key1.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.key1.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.m_NumColorKeys
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 198230957417834362, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ColorModule.gradient.maxGradient.ctime0
+      value: 3662
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198135258744049580, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1.0000
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
   m_ParentPrefab: {fileID: 100100000, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
@@ -2728,7 +2813,7 @@ RectTransform:
   m_GameObject: {fileID: 1940474456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
+  m_LocalScale: {x: 0.016666666, y: 0.016666666, z: 0.016666666}
   m_Children:
   - {fileID: 220781122}
   - {fileID: 1113020770}
