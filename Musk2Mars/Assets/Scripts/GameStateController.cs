@@ -37,6 +37,10 @@ public class GameStateController : MonoBehaviour {
 	public GameObject ground;
 	public GameObject landingPad;
 	public int landDistance;
+	public AudioSource backgroundMusic;
+	public AudioSource hitFuelSound;
+	public AudioSource hitCoinSound;
+	
 	private static float fuel;
 	private static int coins = 0;
 	private static double score = 0;
@@ -88,11 +92,14 @@ public class GameStateController : MonoBehaviour {
 		currState = state;
 		if(currState == "Game Running") {
 			showCanvasElements(false, true, false);
+			backgroundMusic.Play();
 		} else if(currState == "First Death") {
 			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
+			backgroundMusic.Stop();		
 		} else if(currState == "Landing") {
 			showCanvasElements(false, true, false);
+			backgroundMusic.Play();		
 		} else if(currState == "End Game") {
 			showCanvasElements(false, false, true);
 			saveData();
@@ -102,8 +109,10 @@ public class GameStateController : MonoBehaviour {
 			score = 0;
 			coins = 0;
 			Destroy(gameObject);
+			backgroundMusic.Stop();		
 		} else if (currState == "Video Ad") {
 			showCanvasElements(false, false, false);
+			backgroundMusic.Stop();				
 		}
 	}
 		
@@ -243,6 +252,13 @@ public class GameStateController : MonoBehaviour {
 			coins = (int)Mathf.Round(coins*coinMultiplier);
 		}	
 		successfullyLanded = true;
-		
+	}
+
+	public void PlayHitFuelSound() {
+		hitFuelSound.Play();
+	}
+
+	public void PlayHitCoinSound() {
+		hitCoinSound.Play();
 	}
 }

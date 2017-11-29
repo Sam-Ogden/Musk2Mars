@@ -16,10 +16,12 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float takeOffForce; // Force added to character for take off
 	public float fuelPackValue; // Amount of fuel gained from a fuel pack
 	public ParticleSystem particles;
+
 	private DataControl data;
 	private GameStateController gameState;
 	private int verticalSpeed;
 	private bool takeOff;
+
 	//private float screenWidth;
 	private float screenHeight;
 
@@ -38,7 +40,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		//inputMode = "test";
+		inputMode = "test";
 		takeOff = true;
 		particles.Stop();
 	}
@@ -108,12 +110,13 @@ public class CharacterBehaviour : MonoBehaviour {
 		if (obj.gameObject.CompareTag ("Coin")) {
 			// Coin collected remove from game
 			Destroy (obj.gameObject);
-			// Play satisfying hit coin sound
+			gameState.PlayHitCoinSound();
 			// Coint coins
 			gameState.updateCoins (1);
 		} else if (obj.gameObject.CompareTag ("Fuel")) {
 			Destroy (obj.gameObject);
 			gameState.updateFuel (150f);
+			gameState.PlayHitFuelSound();
 		} else if (obj.gameObject.CompareTag ("Obstacle")) {
 			if(!gameState.isLanding()) {
 				gameState.ChangeState ("First Death");
