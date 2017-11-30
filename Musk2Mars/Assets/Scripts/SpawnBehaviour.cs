@@ -4,12 +4,15 @@ using UnityEngine;
 
 public class SpawnBehaviour : MonoBehaviour {
 
+	public GameStateController gameState;
 	public uint generatorNum;	// The number of generators. How many objects can be on the screen at once
 	public GameObject generator;// Prefab of generator object, assign in UI
 	public GameObject coin;		// Coin Prefab, assign in UI 💰
 	public GameObject fuel;		// Fuel Prefab, assign in UI ⛽️
 	public GameObject enemy1;	// Placeholder prefab for an enemy
 	public float upperOffset;	// Distance between top of screen and spawner line
+	public float lowerOffset;
+	public float landBuffer;
 	public float screenCutoff;	// Padding on sides of screen. Padding on each side: screenCutoff/2
 	public float collectibleGap;// Gap between lines of spawned collectibles
 	public float maxObstacleGap;
@@ -25,6 +28,9 @@ public class SpawnBehaviour : MonoBehaviour {
 	private GameObject[] collectibles;	// Stores the prefabs of collectibles, declared further up
 	private GameObject[] obstacles;
 	private uint difficulty;
+	private bool top;
+	private bool bot;
+	private float minY;
 
 	// Patterns should be added in reverse vertical order
 	private byte[,,] patterns = {
@@ -53,7 +59,7 @@ public class SpawnBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		cam = Camera.main;	// Store main camera
-
+		gameState = GameStateController.gameStateController;
 		// Calculate screen sizes
 		var screenBottomLeft = cam.ViewportToWorldPoint(
 			new Vector3(0, 0, transform.position.z));
@@ -62,12 +68,9 @@ public class SpawnBehaviour : MonoBehaviour {
 		screenWidth = screenTopRight.x - screenBottomLeft.x;
 		screenHeight = screenTopRight.y - screenBottomLeft.y;
 
-		lines = new Queue();
-		collectibleY = transform.position.y;
-		obstacleY = transform.position.y;
 		collectibles = new GameObject[] { coin, fuel };	// Add more collectible prefabs here
 		obstacles = new GameObject[] { enemy1 };	// Add more enemy/obstacle prefabs here
-		positionSpawn();	// Move parent spawn line to top of screen
+		positionSpawn(true, false);	// Move parent spawn line to top of screen
 		generateSpawners();	// Arrange spawners in line
 		obstacleGap = maxObstacleGap;
 		difficulty = 0;
@@ -75,23 +78,43 @@ public class SpawnBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if(gameState.isLanding() && !bot) {
+			positionSpawn(false, true);
+		} else if(gameState.gameIsRunning() && !top) {
+			positionSpawn(true, false);
+		}
+
 		if(lines.Count <= 2) {
 			// Starting to run out of instructions so generate more
 			addPattern();
 		}
-		if(transform.position.y >= obstacleY + obstacleGap) {
+		if(Mathf.Abs(transform.position.y - obstacleY) >= obstacleGap && transform.position.y > minY) {
 			spawnObstacles();
-		} else if(transform.position.y >= collectibleY + collectibleGap) {
+		} else if(Mathf.Abs(transform.position.y - collectibleY) >= collectibleGap && transform.position.y > minY) {
 			// Far enough from last spawned line, so spawn more
 			spawnCollectibles();
 		}
 	}
 
 	// Positions spawn above view
-	void positionSpawn() {
-		Vector3 positionChange = new Vector3();
-		positionChange.y = (screenHeight / 2) + upperOffset;
-		transform.position += positionChange;
+	void positionSpawn(bool newTop, bool newBot) {
+		if(newTop) {
+			Vector3 topPosition = cam.transform.position;
+			topPosition.y += (screenHeight / 2) + upperOffset;
+			transform.position = topPosition;
+			minY = -1000000000.0f;
+		} else if(newBot) {
+			Vector3 botPosition = cam.transform.position;
+			botPosition.y -= (screenHeight / 2) + lowerOffset;
+			transform.position = botPosition;
+			minY = transform.position.y - (float) gameState.landDistance + landBuffer;
+		}
+			
+		top = newTop;
+		bot = newBot;
+		lines = new Queue();
+		collectibleY = transform.position.y;
+		obstacleY = transform.position.y;
 	}
 
 	// Generate objects in order to keep track of positions without calculating each time
@@ -120,7 +143,12 @@ public class SpawnBehaviour : MonoBehaviour {
 			int[] line = (int[]) lines.Dequeue();
 			for(int i = 0; i < generatorNum; i ++) {
 				if (patterns[ line[0],line[1],i ] > 0){
-					GameObject item = collectibles[ patterns[ line[0],line[1],i ] - 1 ];
+					GameObject item;
+					if(top) {
+						item = collectibles[ patterns[ line[0],line[1],i ] - 1 ];
+					} else {
+						item = coin;
+					}
 					Instantiate(item, generators[i].transform.position, Quaternion.identity);
 				}
 			}

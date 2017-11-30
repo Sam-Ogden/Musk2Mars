@@ -653,7 +653,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 345481241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0, z: 0}
+  m_LocalPosition: {x: 31, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1094047345}
@@ -937,7 +937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59de710c39e09947a079c0964047a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: {fileID: 0}
   lowerOffset: 4
+  upperOffset: 4
 --- !u!61 &687547167
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2346,12 +2348,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3867c0f9d00cff4ab60d43310a40cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: {fileID: 0}
   generatorNum: 6
   generator: {fileID: 1261574514790462, guid: 5aabba2aa5cd7444ca8f14ae014fb6f6, type: 2}
   coin: {fileID: 1427042562778256, guid: 85a9b5dff48f240248e2747dd857f96a, type: 2}
   fuel: {fileID: 1643599130702124, guid: f8d65875f7ff44d3aa086fd7eb4cc41b, type: 2}
   enemy1: {fileID: 1753225483521930, guid: 9e7256325a8b5a047a09bc1366b5e527, type: 2}
   upperOffset: 4
+  lowerOffset: 4
+  landBuffer: 12
   screenCutoff: 0.8
   collectibleGap: 1.2
   maxObstacleGap: 40
@@ -2813,7 +2818,7 @@ RectTransform:
   m_GameObject: {fileID: 1940474456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.016666666, y: 0.016666666, z: 0.016666666}
+  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
   m_Children:
   - {fileID: 220781122}
   - {fileID: 1113020770}
