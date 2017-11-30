@@ -28,6 +28,7 @@ public class GameStateController : MonoBehaviour {
 	public GameObject continueMenu;
 	public GameObject HUD;
 	public Text displayScore;
+	public Text displayCoins;
 	public Slider fuelBar;
 	public Text mainMenuHighScore;
 	public static GameStateController gameStateController;
@@ -68,6 +69,7 @@ public class GameStateController : MonoBehaviour {
 		data = DataControl.control;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
 		updateMainMenuHighScore();
+		displayCoins.text = data.getValue("Coins");
 		successfullyLanded = false;
 		seenAd = false;
 	}

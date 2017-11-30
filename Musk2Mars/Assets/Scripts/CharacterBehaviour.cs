@@ -16,7 +16,8 @@ public class CharacterBehaviour : MonoBehaviour {
 	public float takeOffForce; // Force added to character for take off
 	public float fuelPackValue; // Amount of fuel gained from a fuel pack
 	public ParticleSystem particles;
-
+	public bool testMode;
+	
 	private DataControl data;
 	private GameStateController gameState;
 	private int verticalSpeed;
@@ -40,7 +41,7 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		inputMode = "test";
+		if(testMode) inputMode = "test";
 		takeOff = true;
 		particles.Stop();
 	}

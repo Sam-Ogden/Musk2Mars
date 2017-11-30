@@ -160,8 +160,8 @@ MonoBehaviour:
   inputMode: test
   takeOffForce: 0.2
   fuelPackValue: 500
-  soundControl: {fileID: 0}
   particles: {fileID: 198230957417834362}
+  testMode: 1
 --- !u!198 &198230957417834362
 ParticleSystem:
   m_ObjectHideFlags: 1
