@@ -45,20 +45,20 @@ public class SpawnBehaviour : MonoBehaviour {
 			{0,0,0,1,0,0,0,1,0,0,0},
 			{0,0,1,0,0,0,0,0,1,0,0},
 			{0,1,0,0,0,0,0,0,0,1,0},
-			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1}
 		},
 		{
 			{1,1,1,1,1,1,1,1,1,1,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
 			{1,0,1,0,0,0,0,0,1,0,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
-			{1,0,0,0,1,0,1,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,2,0,0,0,0,1},
-			{1,0,0,0,1,0,1,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
 			{1,0,1,0,0,0,0,0,1,0,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
-			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1}
 		},
 		{
 			{1,1,1,1,1,1,1,1,1,1,1},
@@ -71,7 +71,20 @@ public class SpawnBehaviour : MonoBehaviour {
 			{1,1,1,1,1,1,1,1,1,1,1},
 			{1,1,1,1,1,1,1,1,2,1,1},
 			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1}
+		},
+		{
+			{0,0,0,0,0,1,1,1,1,1,1},
+			{0,0,0,0,0,1,1,1,1,1,1},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
 			{1,1,1,1,1,1,1,1,1,1,1},
+			{0,0,0,0,0,0,0,0,0,2,0},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,0,0,0,0,0,0,0,0,0},
+			{1,1,1,1,1,1,0,0,0,0,0},
+			{1,1,1,1,1,1,0,0,0,0,0}
 		}
 	};
 	
@@ -150,13 +163,13 @@ public class SpawnBehaviour : MonoBehaviour {
 	}
 
 	void addPattern() {
-		int[] pad = new int[generatorNum];
-		System.Array.Clear(pad, 0, pad.Length);
-		lines.Enqueue(pad);
+		int[] pad = {-1, -1};
 		int chosen = Random.Range(0, patterns.GetLength(0));
 		for(int i = 0; i < patterns.GetLength(1); i ++) {
 			lines.Enqueue(new int[] {chosen, i});
 		}
+		lines.Enqueue(pad);
+		lines.Enqueue(pad);
 		lines.Enqueue(pad);
 	}
 
@@ -164,15 +177,17 @@ public class SpawnBehaviour : MonoBehaviour {
 		if(lines.Count != 0) {
 			collectibleY = transform.position.y;
 			int[] line = (int[]) lines.Dequeue();
-			for(int i = 0; i < generatorNum; i ++) {
-				if (patterns[ line[0],line[1],i ] > 0){
-					GameObject item;
-					if(top) {
-						item = collectibles[ patterns[ line[0],line[1],i ] - 1 ];
-					} else {
-						item = coin;
+			if(line[0] != -1) {
+				for(int i = 0; i < generatorNum; i ++) {
+					if (patterns[ line[0],line[1],i ] > 0) {
+						GameObject item;
+						if(top) {
+							item = collectibles[ patterns[ line[0],line[1],i ] - 1 ];
+						} else {
+							item = coin;
+						}
+						Instantiate(item, generators[i].transform.position, Quaternion.identity);
 					}
-					Instantiate(item, generators[i].transform.position, Quaternion.identity);
 				}
 			}
 		}
