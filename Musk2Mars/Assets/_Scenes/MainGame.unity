@@ -390,7 +390,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 128873062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 162, z: 0}
+  m_LocalPosition: {x: 0, y: 161.99997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1940474460}
@@ -653,7 +653,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 345481241}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 0, z: 0}
+  m_LocalPosition: {x: 18.499985, y: -0.000030517578, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1094047345}
@@ -937,7 +937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59de710c39e09947a079c0964047a53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameState: {fileID: 0}
   lowerOffset: 4
+  upperOffset: 4
 --- !u!61 &687547167
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1362,7 +1364,7 @@ RectTransform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 849500675}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 219, z: 0}
+  m_LocalPosition: {x: 0, y: 218.99997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1940474460}
@@ -1477,7 +1479,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4382554345584070, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -3.43
+      value: -3.71
       objectReference: {fileID: 0}
     - target: {fileID: 4382554345584070, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
       propertyPath: m_LocalPosition.z
@@ -1507,6 +1509,11 @@ Prefab:
         type: 2}
       propertyPath: soundControl
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114852673984636652, guid: 2e617cbfff8ed1642bd94496c93714cd,
+        type: 2}
+      propertyPath: testMode
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
@@ -2346,14 +2353,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3867c0f9d00cff4ab60d43310a40cdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generatorNum: 6
+  gameState: {fileID: 0}
   generator: {fileID: 1261574514790462, guid: 5aabba2aa5cd7444ca8f14ae014fb6f6, type: 2}
   coin: {fileID: 1427042562778256, guid: 85a9b5dff48f240248e2747dd857f96a, type: 2}
   fuel: {fileID: 1643599130702124, guid: f8d65875f7ff44d3aa086fd7eb4cc41b, type: 2}
   enemy1: {fileID: 1753225483521930, guid: 9e7256325a8b5a047a09bc1366b5e527, type: 2}
   upperOffset: 4
-  screenCutoff: 0.8
-  collectibleGap: 1.2
+  lowerOffset: 4
+  landBuffer: 12
+  screenCutoff: 0.6
+  collectibleGap: 0.6
   maxObstacleGap: 40
   minObstacleGap: 15
 --- !u!1001 &1630704505
@@ -2813,7 +2822,7 @@ RectTransform:
   m_GameObject: {fileID: 1940474456}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 90}
-  m_LocalScale: {x: 0.016666666, y: 0.016666666, z: 0.016666666}
+  m_LocalScale: {x: 0.016666668, y: 0.016666668, z: 0.016666668}
   m_Children:
   - {fileID: 220781122}
   - {fileID: 1113020770}
