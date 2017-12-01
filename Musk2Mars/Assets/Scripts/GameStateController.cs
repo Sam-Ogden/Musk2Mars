@@ -29,6 +29,7 @@ public class GameStateController : MonoBehaviour {
 	public GameObject HUD;
 	public Text displayScore;
 	public Text displayCoins;
+	public Text displayCoinsHUD;	
 	public Slider fuelBar;
 	public Text mainMenuHighScore;
 	public static GameStateController gameStateController;
@@ -194,6 +195,7 @@ public class GameStateController : MonoBehaviour {
 
 	public void updateCoins(int newCoins) {
 		coins = coins + newCoins;
+		displayCoinsHUD.text = ""+coins;
 	}
 
 	public string GetState() {
