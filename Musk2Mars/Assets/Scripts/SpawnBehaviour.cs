@@ -5,7 +5,6 @@ using UnityEngine;
 public class SpawnBehaviour : MonoBehaviour {
 
 	public GameStateController gameState;
-	public uint generatorNum;	// The number of generators. How many objects can be on the screen at once
 	public GameObject generator;// Prefab of generator object, assign in UI
 	public GameObject coin;		// Coin Prefab, assign in UI 💰
 	public GameObject fuel;		// Fuel Prefab, assign in UI ⛽️
@@ -31,28 +30,48 @@ public class SpawnBehaviour : MonoBehaviour {
 	private bool top;
 	private bool bot;
 	private float minY;
+	private uint generatorNum;	// The number of generators. How many objects can be on the screen at once
 
 	// Patterns should be added in reverse vertical order
 	private byte[,,] patterns = {
 		{
-			{0,0,0,0,0,0},
-			{1,1,0,0,0,0},
-			{1,1,0,0,0,0},
-			{0,0,1,1,0,0},
-			{0,0,1,2,0,0},
-			{0,0,0,0,1,1},
-			{0,0,0,0,1,1},
-			{0,0,0,0,0,0}
+			{1,0,0,0,0,0,0,0,0,0,1},
+			{0,1,0,0,0,0,0,0,0,1,0},
+			{0,0,1,0,0,0,0,0,1,0,0},
+			{0,0,0,1,0,0,0,1,0,0,0},
+			{0,0,0,0,1,0,1,0,0,0,0},
+			{0,0,2,0,0,1,0,0,2,0,0},
+			{0,0,0,0,1,0,1,0,0,0,0},
+			{0,0,0,1,0,0,0,1,0,0,0},
+			{0,0,1,0,0,0,0,0,1,0,0},
+			{0,1,0,0,0,0,0,0,0,1,0},
+			{1,0,0,0,0,0,0,0,0,0,1},
 		},
 		{
-			{0,0,0,1,1,0},
-			{0,0,0,1,1,0},
-			{0,0,0,0,0,0},
-			{0,0,0,0,0,0},
-			{0,1,1,0,0,0},
-			{0,1,1,0,0,0},
-			{0,0,0,0,0,0},
-			{0,0,0,0,2,0}
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,0,1,0,0,0,0,0,1,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,1,0,1,0,0,0,1},
+			{1,0,0,0,0,2,0,0,0,0,1},
+			{1,0,0,0,1,0,1,0,0,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,0,1,0,0,0,0,0,1,0,1},
+			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+		},
+		{
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,2,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,2,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
+			{1,1,1,1,1,1,1,1,1,1,1},
 		}
 	};
 	
@@ -67,7 +86,7 @@ public class SpawnBehaviour : MonoBehaviour {
 			new Vector3(1, 1, transform.position.z));
 		screenWidth = screenTopRight.x - screenBottomLeft.x;
 		screenHeight = screenTopRight.y - screenBottomLeft.y;
-
+		generatorNum = (uint) patterns.GetLength(2);
 		collectibles = new GameObject[] { coin, fuel };	// Add more collectible prefabs here
 		obstacles = new GameObject[] { enemy1 };	// Add more enemy/obstacle prefabs here
 		positionSpawn(true, false);	// Move parent spawn line to top of screen
@@ -120,7 +139,7 @@ public class SpawnBehaviour : MonoBehaviour {
 	// Generate objects in order to keep track of positions without calculating each time
 	void generateSpawners() {
 		generators = new GameObject[generatorNum];
-		float gap = (screenWidth - screenCutoff) / generatorNum;	// Distribute generators on width
+		float gap = (screenWidth - screenCutoff) / (generatorNum - 1);	// Distribute generators on width
 		float xPosition = transform.position.x - ((screenWidth - screenCutoff) / 2);
 		for(int i = 0; i < generatorNum; i ++) {
 			// Instantiate generators and make them children of the Spawn object
@@ -131,10 +150,14 @@ public class SpawnBehaviour : MonoBehaviour {
 	}
 
 	void addPattern() {
+		int[] pad = new int[generatorNum];
+		System.Array.Clear(pad, 0, pad.Length);
+		lines.Enqueue(pad);
 		int chosen = Random.Range(0, patterns.GetLength(0));
 		for(int i = 0; i < patterns.GetLength(1); i ++) {
 			lines.Enqueue(new int[] {chosen, i});
 		}
+		lines.Enqueue(pad);
 	}
 
 	void spawnCollectibles() {
