@@ -115,7 +115,6 @@ public class GameStateController : MonoBehaviour {
 		} else if(currState == "First Death") {
 			if(seenAd) characterLand();
 			else showCanvasElements(true, true, false);
-			backgroundMusic.Stop();		
 		} else if(currState == "Landing") {
 			showCanvasElements(false, true, false);
 			backgroundMusic.Play();		
@@ -143,6 +142,7 @@ public class GameStateController : MonoBehaviour {
 
 	// When user clicks continuePlaying button, a video ad is played then the game continues (Landing)
 	public void showVideoAd() {
+		backgroundMusic.Stop();				
 		#if UNITY_ADS
 		if (Advertisement.IsReady("rewardedVideo")) {
 			var options = new ShowOptions { resultCallback = HandleShowAdResult };
