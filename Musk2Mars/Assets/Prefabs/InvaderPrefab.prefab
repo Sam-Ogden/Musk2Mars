@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4024913050504636}
   - component: {fileID: 212214455640393372}
-  - component: {fileID: 61569755876140854}
   - component: {fileID: 50921006497374828}
+  - component: {fileID: 61569755876140854}
   m_Layer: 0
   m_Name: InvaderPrefab
   m_TagString: Obstacle

@@ -56,6 +56,10 @@ public class DespawnBehaviour : MonoBehaviour {
 	}
 
 	// Destroy things that get here
+	void OnTriggerEnter2D(Collider2D obj) {
+		// Most probably not relevant if it gets this low but can alter to be exclusive
+		Destroy(obj.gameObject);
+	}
 	void OnCollisionEnter2D(Collision2D obj) {
 		// Most probably not relevant if it gets this low but can alter to be exclusive
 		Destroy(obj.gameObject);

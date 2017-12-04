@@ -105,7 +105,7 @@ public class CharacterBehaviour : MonoBehaviour {
 	}
 
 	// Collision handler
-	void OnCollisionEnter2D (Collision2D obj) {
+	void OnTriggerEnter2D (Collider2D obj) {
 		if (obj.gameObject.CompareTag ("Coin")) {
 			// Coin collected remove from game
 			Destroy (obj.gameObject);
@@ -116,19 +116,27 @@ public class CharacterBehaviour : MonoBehaviour {
 			Destroy (obj.gameObject);
 			gameState.updateFuel (150f);
 			gameState.PlayHitFuelSound();
-		} else if (obj.gameObject.CompareTag ("Obstacle")) {
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D obj) {
+		if (obj.gameObject.CompareTag("Obstacle")) {
 			if(!gameState.isLanding()) {
-				gameState.ChangeState ("First Death");
+				gameState.ChangeState("First Death");
 			}
-		} else if(obj.gameObject.CompareTag ("LandingGround")) {
+		} else if(obj.gameObject.CompareTag("LandingGround")) {
 			// Did we land safely?
-			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 2.2) {
+			// if(gameObject.GetComponent<Rigidbody2D>().velocity.x < 0.5 &&
+			if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 5.1) {
+			
 				Debug.Log("SUCCESSFUL LANDING");
 				gameState.successfulLanding(1.5f);
 			}
 			gameState.ChangeState("End Game");
-		} else if(obj.gameObject.CompareTag ("LandingPad") && gameState.isLanding()) {
-			if(obj.relativeVelocity.x < 0.5 && obj.relativeVelocity.y < 2.2) {
+		} else if(obj.gameObject.CompareTag("LandingPad") && gameState.isLanding()) {
+			// if(gameObject.GetComponent<Rigidbody2D>().velocity.x < 0.5 &&
+			// 	gameObject.GetComponent<Rigidbody2D>().velocity.y < 2.2) {
+			if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 5.1) {
 				Debug.Log("SUPER SUCCESSFUL LANDING");
 				gameState.successfulLanding(2f);
 			}

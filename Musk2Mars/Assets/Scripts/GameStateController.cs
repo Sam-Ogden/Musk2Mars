@@ -40,6 +40,8 @@ public class GameStateController : MonoBehaviour {
 	public float maxFuel;
 	public float initialLandingFuel;
 	public float groundHeight;
+	public float groundCenterOffset;
+	public float padOffset;
 	public int landDistance;
 	public AudioSource backgroundMusic;
 	public AudioSource hitFuelSound;
@@ -55,7 +57,7 @@ public class GameStateController : MonoBehaviour {
 	private bool successfullyLanded;
 	private int frameCount;
 	private float screenHeight;
- 	private float screenWidth;
+ 	//private float screenWidth;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -82,13 +84,23 @@ public class GameStateController : MonoBehaviour {
 			 new Vector3(0, 0, transform.position.z));
  		var screenTopRight = Camera.main.ViewportToWorldPoint(
 			 new Vector3(1, 1, transform.position.z));
-		screenWidth = screenTopRight.x - screenBottomLeft.x;
+		// screenWidth = screenTopRight.x - screenBottomLeft.x;
  		screenHeight = screenTopRight.y - screenBottomLeft.y;
 		Instantiate(ship, new Vector3(
 			Camera.main.transform.position.x,
-			Camera.main.transform.position.y - screenHeight / 2 + groundHeight,
+			Camera.main.transform.position.y - (screenHeight/2) -groundCenterOffset + groundHeight,
 			0
 		), Quaternion.identity).name = "Player"; // Instantiate ship and give it standard name
+		Instantiate(ground, new Vector3(
+			Camera.main.transform.position.x,
+			Camera.main.transform.position.y - (screenHeight/2) - groundCenterOffset,
+			0
+		),Quaternion.identity).name = "Ground";
+		Instantiate(landingPad, new Vector3(
+			Camera.main.transform.position.x,
+			Camera.main.transform.position.y - (screenHeight/2) - groundCenterOffset + padOffset,
+			0
+		), Quaternion.identity);
 	}
 
 	public void StartGame() {
@@ -183,12 +195,11 @@ public class GameStateController : MonoBehaviour {
 		float yPos = Camera.main.transform.position.y - landDistance;
 		Vector3 groundLoc = new Vector3(0, yPos, -1);
 		Vector3 padLoc = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0,Screen.width),0,0));
-		padLoc.y = yPos+0.5f;
+		padLoc.y = yPos + padOffset;
 		padLoc.z = -1;
 		landingGround = Instantiate(ground, groundLoc, Quaternion.identity);
-		Instantiate(landingPad, padLoc, Quaternion.identity);
-		// Sets foregrounds tag so can detect landing
-		landingGround.transform.Find("ForeGround").tag = "LandingGround";		
+		landingGround.tag = "LandingGround";
+		Instantiate(landingPad, padLoc, Quaternion.identity).tag = "LandingPad";	
 	}
 
 	// Update score once every 3 frames
@@ -262,7 +273,7 @@ public class GameStateController : MonoBehaviour {
 	}
 	// Returns the distance between clone floor and camera
 	public float getCamFloorDistance() {
-		return Camera.main.transform.position.y - landingGround.transform.position.y;
+		return Camera.main.transform.position.y - landingGround.transform.position.y - groundCenterOffset;
 	}
 
 	// Successful landing, reward player double or 1.5x coins

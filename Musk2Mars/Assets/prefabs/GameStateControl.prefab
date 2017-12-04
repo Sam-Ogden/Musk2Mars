@@ -34,7 +34,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1640734952404516}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.3291279, y: -2.9918869, z: -0.23887251}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -54,9 +54,9 @@ MonoBehaviour:
   gameMenu: {fileID: 0}
   continueMenu: {fileID: 0}
   HUD: {fileID: 0}
-  ground: {fileID: 0}
-  landingPad: {fileID: 0}
-  ship: {fileID: 0}
+  ground: {fileID: 1610069140669834, guid: b5ae09b3ecfc553419cb30a8365e52ed, type: 2}
+  landingPad: {fileID: 1552613253891868, guid: 55875a60773974a2583344a257718470, type: 2}
+  ship: {fileID: 1847352916723950, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
   displayScore: {fileID: 0}
   displayCoins: {fileID: 0}
   displayCoinsHUD: {fileID: 0}
@@ -65,7 +65,9 @@ MonoBehaviour:
   initialFuel: 1000
   maxFuel: 1000
   initialLandingFuel: 300
-  groundHeight: 1.4
+  groundHeight: 1.5
+  groundCenterOffset: 0.8
+  padOffset: 1.18
   landDistance: 20
   backgroundMusic: {fileID: 0}
   hitFuelSound: {fileID: 0}
