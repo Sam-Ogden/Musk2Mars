@@ -7,8 +7,8 @@ public class TextAnmator : MonoBehaviour {
 
 	public int duration;
 	public Text tapToPlay;
-	private Color color1 = Color.white;
-	private Color color2 = Color.grey;
+	public Color color1 = Color.white;
+	public Color color2 = Color.grey;
 	
 	// Use this for initialization
 	void Start () {
