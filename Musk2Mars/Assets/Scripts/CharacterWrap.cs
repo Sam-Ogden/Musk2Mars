@@ -38,6 +38,7 @@ public class CharacterWrap : MonoBehaviour {
 	void CreateGhostShips() {
 		for(int i = 0; i < 2; i++) {
 			ghosts[i] = Instantiate(ghost, Vector3.zero, Quaternion.identity) as Transform;
+			Destroy(ghosts[i].GetComponent<CharacterWrap>());
 		}
 	}
 

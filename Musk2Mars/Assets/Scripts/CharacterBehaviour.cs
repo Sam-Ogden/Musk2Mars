@@ -6,23 +6,21 @@ using UnityEngine.UI;
 
 public class CharacterBehaviour : MonoBehaviour {
 
+	public ParticleSystem particles;
 	public float horizontalFlySpeed; // Horizontal movement speed
 	public float verticalFlySpeed;
-
 	public float landBoostForce;
 	public float maxVelocityChange; // The max increase in speed at one step (aka accelleration...)
 	public float maxFlyChange;
-	public string inputMode; // Type of input (tilt, tap, keyboard-for testing)
 	public float takeOffForce; // Force added to character for take off
 	public float fuelPackValue; // Amount of fuel gained from a fuel pack
-	public ParticleSystem particles;
 	public bool testMode;
+	public string inputMode; // Type of input (tilt, tap, keyboard-for testing)
 	
 	private DataControl data;
 	private GameStateController gameState;
 	private int verticalSpeed;
 	private bool takeOff;
-
 	//private float screenWidth;
 	private float screenHeight;
 

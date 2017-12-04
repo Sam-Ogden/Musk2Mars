@@ -40,6 +40,7 @@ GameObject:
   - component: {fileID: 50718419752545986}
   - component: {fileID: 60744989577263840}
   - component: {fileID: 114852673984636652}
+  - component: {fileID: 114910898025915804}
   m_Layer: 0
   m_Name: ShipPrefab
   m_TagString: Untagged
@@ -67,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1847352916723950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.0966763, y: -1.1010737, z: 0}
+  m_LocalPosition: {x: 0, y: -3.83, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 1}
   m_Children:
   - {fileID: 4013042076522584}
@@ -152,16 +153,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cbf804080a8ee84a9fd605f83260728, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particles: {fileID: 198230957417834362}
   horizontalFlySpeed: 600
   verticalFlySpeed: 50
   landBoostForce: 18
   maxVelocityChange: 50
   maxFlyChange: 30
-  inputMode: test
   takeOffForce: 0.2
   fuelPackValue: 500
-  particles: {fileID: 198230957417834362}
   testMode: 1
+  inputMode: test
+--- !u!114 &114910898025915804
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847352916723950}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 589b1a76d28a78346ab7324c7823d187, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ghost: {fileID: 4382554345584070}
 --- !u!198 &198230957417834362
 ParticleSystem:
   m_ObjectHideFlags: 1

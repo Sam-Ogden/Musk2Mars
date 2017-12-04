@@ -27,17 +27,19 @@ public class GameStateController : MonoBehaviour {
 	public GameObject gameMenu;
 	public GameObject continueMenu;
 	public GameObject HUD;
+	public GameObject ground;
+	public GameObject landingPad;
+	public GameObject ship;
 	public Text displayScore;
 	public Text displayCoins;
 	public Text displayCoinsHUD;	
-	public Slider fuelBar;
 	public Text mainMenuHighScore;
+	public Slider fuelBar;
 	public static GameStateController gameStateController;
 	public float initialFuel;		// Std fuel in rocket when start game
 	public float maxFuel;
 	public float initialLandingFuel;
-	public GameObject ground;
-	public GameObject landingPad;
+	public float groundHeight;
 	public int landDistance;
 	public AudioSource backgroundMusic;
 	public AudioSource hitFuelSound;
@@ -47,11 +49,13 @@ public class GameStateController : MonoBehaviour {
 	private static int coins = 0;
 	private static double score = 0;
 	private static string currState;
-	private int frameCount;
 	private DataControl data;
-	private bool seenAd;
 	private GameObject landingGround;
+	private bool seenAd;
 	private bool successfullyLanded;
+	private int frameCount;
+	private float screenHeight;
+ 	private float screenWidth;
 	/*
         STATES:
          - Game Running    == remove all menus show HUD
@@ -73,6 +77,18 @@ public class GameStateController : MonoBehaviour {
 		displayCoins.text = data.getValue("Coins");
 		successfullyLanded = false;
 		seenAd = false;
+
+		var screenBottomLeft = Camera.main.ViewportToWorldPoint(
+			 new Vector3(0, 0, transform.position.z));
+ 		var screenTopRight = Camera.main.ViewportToWorldPoint(
+			 new Vector3(1, 1, transform.position.z));
+		screenWidth = screenTopRight.x - screenBottomLeft.x;
+ 		screenHeight = screenTopRight.y - screenBottomLeft.y;
+		Instantiate(ship, new Vector3(
+			Camera.main.transform.position.x,
+			Camera.main.transform.position.y - screenHeight / 2 + groundHeight,
+			0
+		), Quaternion.identity).name = "Player"; // Instantiate ship and give it standard name
 	}
 
 	public void StartGame() {

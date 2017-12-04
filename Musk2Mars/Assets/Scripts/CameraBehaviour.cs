@@ -4,36 +4,40 @@ using UnityEngine;
 
 public class CameraBehaviour : MonoBehaviour {
 	
-	public GameObject player;
- 	private float forceY;
- 	private float forceX;
- 	private Transform playerTransform;
 	public Color[] colors;
 	public float colorDuration = 100F;
 	public float landingColorDuration = 100F;
 	
- 	private float screenHeight;
- 	//private float screenWidth;
+ 	
+	private GameObject player;
 	private GameStateController gameState;
-
+ 	private Transform playerTransform;
+    private Camera cam;
+	private float screenHeight;
+ 	//private float screenWidth;
+ 	private float forceY;
+ 	private float forceX;
 	private float colorTime = 0;
 	private float landingColorTime = 0;	
 	private int color1 = 0;
 	private int color2 = 1;
-
-    Camera cam;
 
 	// Use this for initialization
 	void Start () {
 		cam = GetComponent<Camera>();
         cam.clearFlags = CameraClearFlags.SolidColor;
 		cam.backgroundColor = colors[0];
-
 		gameState = GameStateController.gameStateController;
+
+		player = GameObject.Find("Player");	// Find Player object
+		if(player != null) {
+			playerTransform = player.GetComponent<Transform>();	// Bind player transform for position
+		} else {
+			Debug.Log("Could not find player");
+		}
 		playerTransform = player.GetComponent<Transform>();
  		forceY = 0;
  		forceX = 0;
-		
 		// Calculate screen dimensions
  		var screenBottomLeft = Camera.main.ViewportToWorldPoint(
 			 new Vector3(0, 0, transform.position.z));

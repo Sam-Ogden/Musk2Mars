@@ -54,11 +54,19 @@ MonoBehaviour:
   gameMenu: {fileID: 0}
   continueMenu: {fileID: 0}
   HUD: {fileID: 0}
+  ground: {fileID: 0}
+  landingPad: {fileID: 0}
+  ship: {fileID: 0}
   displayScore: {fileID: 0}
-  fuelBar: {fileID: 0}
+  displayCoins: {fileID: 0}
+  displayCoinsHUD: {fileID: 0}
   mainMenuHighScore: {fileID: 0}
+  fuelBar: {fileID: 0}
   initialFuel: 1000
   maxFuel: 1000
   initialLandingFuel: 300
-  ground: {fileID: 0}
+  groundHeight: 1.4
   landDistance: 20
+  backgroundMusic: {fileID: 0}
+  hitFuelSound: {fileID: 0}
+  hitCoinSound: {fileID: 0}
