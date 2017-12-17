@@ -73,6 +73,7 @@ public class GameStateController : MonoBehaviour {
 			Advertisement.Initialize("1582720", true);
 		}
 		#endif
+
 		fuel = initialFuel;
 		data = DataControl.control;
 		showCanvasElements(false, false, true); // Set initial state manually to stop saveData
@@ -87,21 +88,6 @@ public class GameStateController : MonoBehaviour {
 			 new Vector3(1, 1, transform.position.z));
 		// screenWidth = screenTopRight.x - screenBottomLeft.x;
  		screenHeight = screenTopRight.y - screenBottomLeft.y;
-		Instantiate(ship, new Vector3(
-			Camera.main.transform.position.x,
-			Camera.main.transform.position.y - (screenHeight/2) -groundCenterOffset + groundHeight,
-			0
-		), Quaternion.identity).name = "Player"; // Instantiate ship and give it standard name
-		Instantiate(ground, new Vector3(
-			Camera.main.transform.position.x,
-			Camera.main.transform.position.y - (screenHeight/2) - groundCenterOffset,
-			0
-		),Quaternion.identity).name = "Ground";
-		Instantiate(landingPad, new Vector3(
-			Camera.main.transform.position.x,
-			Camera.main.transform.position.y - (screenHeight/2) - groundCenterOffset + padOffset,
-			0
-		), Quaternion.identity);
 	}
 
 	public void StartGame() {
@@ -117,6 +103,22 @@ public class GameStateController : MonoBehaviour {
 		} else if (gameStateController != this) {
 			Destroy (gameObject);
 		}
+
+		Instantiate(ship, new Vector3(
+			0,
+			0 - (screenHeight/2) -groundCenterOffset + groundHeight,
+			0
+		), Quaternion.identity).name = "Player"; // Instantiate ship and give it standard name
+		Instantiate(ground, new Vector3(
+			0,
+			0 - (screenHeight/2) - groundCenterOffset,
+			0
+		),Quaternion.identity).name = "Ground";
+		Instantiate(landingPad, new Vector3(
+			0,
+			0 - (screenHeight/2) - groundCenterOffset + padOffset,
+			0
+		), Quaternion.identity);
 	}
 
 	public void ChangeState(string state) {
@@ -264,7 +266,7 @@ public class GameStateController : MonoBehaviour {
 
 	void updateMainMenuHighScore() {
 		if(data.containsKey("HighScore")) {			
-			mainMenuHighScore.text = "Best: "+ data.getValue("HighScore");
+			mainMenuHighScore.text = "Best: " + data.getValue("HighScore");
 		} else {
 			mainMenuHighScore.text = "Best: 0";
 		}

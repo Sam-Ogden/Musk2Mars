@@ -9,30 +9,31 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1640734952404516}
+  m_RootGameObject: {fileID: 1166378998106124}
   m_IsPrefabParent: 1
---- !u!1 &1640734952404516
+--- !u!1 &1166378998106124
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4232572890562790}
-  - component: {fileID: 114421304918964520}
+  - component: {fileID: 4061670522978696}
+  - component: {fileID: 114943760095017082}
+  - component: {fileID: 114884005829479160}
   m_Layer: 0
-  m_Name: GameStateControl
+  m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4232572890562790
+--- !u!4 &4061670522978696
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1640734952404516}
+  m_GameObject: {fileID: 1166378998106124}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -40,25 +41,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114421304918964520
+--- !u!114 &114884005829479160
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1640734952404516}
+  m_GameObject: {fileID: 1166378998106124}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bce7e942caae348eabd6ef094c494947, type: 3}
+  m_Script: {fileID: 1077351063, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ground: {fileID: 1610069140669834, guid: b5ae09b3ecfc553419cb30a8365e52ed, type: 2}
-  landingPad: {fileID: 1552613253891868, guid: 55875a60773974a2583344a257718470, type: 2}
-  ship: {fileID: 1847352916723950, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
-  initialFuel: 1000
-  maxFuel: 1000
-  initialLandingFuel: 300
-  groundHeight: 1.5
-  groundCenterOffset: 0.8
-  padOffset: 1.18
-  milestone1: 225
-  landDistance: 20
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &114943760095017082
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166378998106124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -619905303, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 5
