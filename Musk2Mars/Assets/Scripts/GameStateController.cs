@@ -191,7 +191,7 @@ public class GameStateController : MonoBehaviour {
 		ChangeState ("Landing");
 		fuel = 0;
 		updateFuel(initialLandingFuel);
-		// spawn ground below camera
+		// Spawn ground below camera
 		float yPos = Camera.main.transform.position.y - landDistance;
 		Vector3 groundLoc = new Vector3(0, yPos, -1);
 		Vector3 padLoc = Camera.main.ScreenToWorldPoint(new Vector3(Random.Range(0,Screen.width),0,0));
@@ -203,12 +203,12 @@ public class GameStateController : MonoBehaviour {
 	}
 
 	// Update score once every 3 frames
-	public void UpdateScore() {
+	public void updateScore() {
 		frameCount++;
 		if((frameCount % 3) == 0) {
-			score = System.Math.Round(score+0.1, 2);
+			score = System.Math.Round(score + 0.1, 2);
 		}
-		displayScore.text = score+"";
+		displayScore.text = System.Math.Round(score) + "";
 	}
 
 	public void updateFuel(float newFuel) {
@@ -222,7 +222,7 @@ public class GameStateController : MonoBehaviour {
 
 	public void updateCoins(int newCoins) {
 		coins = coins + newCoins;
-		displayCoinsHUD.text = ""+coins;
+		displayCoinsHUD.text = "" + coins;
 	}
 
 	public string GetState() {
@@ -280,7 +280,7 @@ public class GameStateController : MonoBehaviour {
 	public void successfulLanding(float coinMultiplier) {	
 		// Make sure only multiple coins once (each ship clone calls this method)
 		if(!successfullyLanded) {
-			coins = (int)Mathf.Round(coins*coinMultiplier);
+			coins = (int) Mathf.Round(coins * coinMultiplier);
 		}	
 		successfullyLanded = true;
 	}

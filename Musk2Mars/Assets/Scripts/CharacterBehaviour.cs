@@ -49,10 +49,10 @@ public class CharacterBehaviour : MonoBehaviour {
 		// Take off animation
 		if (takeOff && gameState.gameIsRunning ()) {
 			TakeOff ();
-			gameState.UpdateScore ();
+			gameState.updateScore ();
 			particles.Play();
 		} else if (!takeOff && gameState.gameIsRunning ()) {
-			gameState.UpdateScore ();
+			gameState.updateScore ();
 			gameState.updateFuel (-1f);
 		}
 	}
