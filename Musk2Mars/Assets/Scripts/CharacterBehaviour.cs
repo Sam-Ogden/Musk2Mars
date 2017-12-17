@@ -126,17 +126,15 @@ public class CharacterBehaviour : MonoBehaviour {
 			}
 		} else if(obj.gameObject.CompareTag("LandingGround")) {
 			// Did we land safely?
-			// if(gameObject.GetComponent<Rigidbody2D>().velocity.x < 0.5 &&
-			if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 5.1) {
-			
+			if(obj.relativeVelocity.magnitude < 2.3) {			
+			//if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 5.1) {
 				Debug.Log("SUCCESSFUL LANDING");
 				gameState.successfulLanding(1.5f);
 			}
 			gameState.ChangeState("End Game");
 		} else if(obj.gameObject.CompareTag("LandingPad") && gameState.isLanding()) {
-			// if(gameObject.GetComponent<Rigidbody2D>().velocity.x < 0.5 &&
-			// 	gameObject.GetComponent<Rigidbody2D>().velocity.y < 2.2) {
-			if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 5.1) {
+			if(obj.relativeVelocity.magnitude < 2.3) {
+			//if(gameObject.GetComponent<Rigidbody2D>().velocity.magnitude < 1.1) {
 				Debug.Log("SUPER SUCCESSFUL LANDING");
 				gameState.successfulLanding(2f);
 			}
