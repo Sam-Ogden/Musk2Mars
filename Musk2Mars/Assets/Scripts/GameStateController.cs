@@ -42,6 +42,7 @@ public class GameStateController : MonoBehaviour {
 	public float groundHeight;
 	public float groundCenterOffset;
 	public float padOffset;
+	public float milestone1;
 	public int landDistance;
 	public AudioSource backgroundMusic;
 	public AudioSource hitFuelSound;
@@ -207,6 +208,13 @@ public class GameStateController : MonoBehaviour {
 		frameCount++;
 		if((frameCount % 3) == 0) {
 			score = System.Math.Round(score + 0.1, 2);
+			if(data.containsKey("Level")) {
+				if(System.Int32.Parse(data.getValue("Level")) == 1 && score > milestone1) {
+					data.updateVal("Level", "2");
+				}
+			} else {
+				data.updateVal("Level", "1");
+			}
 		}
 		displayScore.text = System.Math.Round(score) + "";
 	}

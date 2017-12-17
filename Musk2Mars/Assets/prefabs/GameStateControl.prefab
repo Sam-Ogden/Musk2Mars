@@ -68,6 +68,7 @@ MonoBehaviour:
   groundHeight: 1.5
   groundCenterOffset: 0.8
   padOffset: 1.18
+  milestone1: 200
   landDistance: 20
   backgroundMusic: {fileID: 0}
   hitFuelSound: {fileID: 0}
