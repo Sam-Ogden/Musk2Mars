@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1746421006766054}
+  m_IsPrefabParent: 1
+--- !u!1 &1746421006766054
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4204805342034644}
+  - component: {fileID: 114982104864776134}
+  m_Layer: 0
+  m_Name: Loader
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4204805342034644
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1746421006766054}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114982104864776134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1746421006766054}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2204cfa924ac6314b906c86372e70774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCamera: {fileID: 1947023064978440, guid: d05253b086135754fa05e08c1cf6c057, type: 2}
+  GameStateController: {fileID: 1640734952404516, guid: 890dd2076d44d485a9b210a7fdbd981b,
+    type: 2}
+  DataControl: {fileID: 1788786429749618, guid: a0e158e6586dc4f119abb8cc599ee856,
+    type: 2}
+  EventSystem: {fileID: 1166378998106124, guid: 50842865bb5f98242a48bf1fdd8f46b7,
+    type: 2}
+  ContinueMenu: {fileID: 1206757982135998, guid: 48eb04791813b8e4ab3a96b101bd43b2,
+    type: 2}
+  GameMenu: {fileID: 1345065547349200, guid: 703beb80db9f4f6458e97a96762623e0, type: 2}
+  HUD: {fileID: 1625310170763108, guid: 6c6b790211a106b45864e5aedb84fae7, type: 2}
+  Scoremenu: {fileID: 1334406906200138, guid: 5e7d8f557415ff14cb69af776d5b4de0, type: 2}
+  Sounds: {fileID: 1051790905869044, guid: a0317abff2c68664f8666aa7057b5994, type: 2}
