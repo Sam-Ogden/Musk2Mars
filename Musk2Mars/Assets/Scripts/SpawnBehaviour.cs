@@ -16,21 +16,23 @@ public class SpawnBehaviour : MonoBehaviour {
 	public float collectibleGap;// Gap between lines of spawned collectibles
 	public float maxObstacleGap;
 	public float minObstacleGap;
+	
 	private float obstacleGap;	// gap between lines of spawned obstacles
 	private Camera cam;			// Stores main camera 📹
-	private float screenWidth;
-	private float screenHeight;
 	private GameObject[] generators;	// Holds all collectible generators
-	private Queue lines;	// Queue of information about what lines of collectibles to spawn 📏
-	private float collectibleY;	// Stores the Y coordinate of the last spawned line
-	private float obstacleY;	// Stores the Y coordinate of the last spawned obstacle
 	private GameObject[] collectibles;	// Stores the prefabs of collectibles, declared further up
 	private GameObject[] obstacles;
+	private Queue lines;	// Queue of information about what lines of collectibles to spawn 📏
+	private float screenWidth;
+	private float screenHeight;
+	private float collectibleY;	// Stores the Y coordinate of the last spawned line
+	private float obstacleY;	// Stores the Y coordinate of the last spawned obstacle
+	private float minY;
 	private uint difficulty;
+	private uint generatorNum;	// The number of generators. How many objects can be on the screen at once
+	private int obstaclePos;	// The number of the generator that last spawned an obstacle
 	private bool top;
 	private bool bot;
-	private float minY;
-	private uint generatorNum;	// The number of generators. How many objects can be on the screen at once
 
 	// Patterns should be added in reverse vertical order
 	private byte[,,] patterns = {
@@ -186,7 +188,9 @@ public class SpawnBehaviour : MonoBehaviour {
 						} else {
 							item = coin;
 						}
-						Instantiate(item, generators[i].transform.position, Quaternion.identity);
+						if(!(collectibleY == obstacleY && obstaclePos == i)) {
+							Instantiate(item, generators[i].transform.position, Quaternion.identity);
+						}
 					}
 				}
 			}
@@ -202,6 +206,7 @@ public class SpawnBehaviour : MonoBehaviour {
 		collectibleY = transform.position.y;
 		int i = Random.Range(0, obstacles.GetLength(0) - 1);
 		int j = Random.Range(0, generators.GetLength(0) - 1);
+		obstaclePos = j;
 		Instantiate(obstacles[i], generators[j].transform.position, Quaternion.identity);
 	}
 }
