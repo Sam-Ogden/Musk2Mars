@@ -22,21 +22,16 @@ public class CharacterWrap : MonoBehaviour {
 		CreateGhostShips();
 		PositionGhostShips();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-
-	}
 
 	void FixedUpdate() {
 		isVisible = CheckRenderers();	//check if any renderers are visible
-		if(!isVisible) {
+		if (!isVisible) {
 			SwapShips();
 		}
 	}
 
 	void CreateGhostShips() {
-		for(int i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			ghosts[i] = Instantiate(ghost, Vector3.zero, Quaternion.identity) as Transform;
 			Destroy(ghosts[i].GetComponent<CharacterWrap>());
 		}
@@ -59,14 +54,14 @@ public class CharacterWrap : MonoBehaviour {
 		ghosts[1].position = ghostPosition;
 	
 		// All ghost ships should have the same rotation as the main ship
-		for(int i = 0; i < 2; i++) {
+		for (int i = 0; i < 2; i++) {
 			ghosts[i].rotation = transform.rotation;
 		}
 	}
 
 	void SwapShips() {
 		// Reposition main ship in the new position
-		foreach(var ghost in ghosts) {
+		foreach (var ghost in ghosts) {
 			if (ghost.position.x < screenWidth && ghost.position.x > -screenWidth) {
 				transform.position = ghost.position;	// Move main ship to the visible position
 				break;
@@ -77,9 +72,9 @@ public class CharacterWrap : MonoBehaviour {
 	}
 
 	bool CheckRenderers() {
-		foreach(var renderer in renderers) {
+		foreach (var renderer in renderers) {
 			// If at least one render is visible, return true
-			if(renderer.isVisible) {
+			if (renderer.isVisible) {
 				return true;
 			}
 		}

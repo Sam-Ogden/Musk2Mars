@@ -24,7 +24,6 @@ public class CharacterBehaviour : MonoBehaviour {
 	private bool takeOff;
 	//private float screenWidth;
 	private float screenHeight;
-	private float lastFuelTime;
 
 	// Use this for initialization
 	void Start () {
@@ -37,7 +36,6 @@ public class CharacterBehaviour : MonoBehaviour {
 		screenHeight = screenTopRight.y - screenBottomLeft.y;
 		data = DataControl.control;
 		gameState = GameStateController.gameStateController;
-		lastFuelTime = Time.time;
 
 		data.updateVal("inputMethod", "tilt");
 		inputMode = "tilt";
@@ -56,8 +54,6 @@ public class CharacterBehaviour : MonoBehaviour {
 			gameState.updateScore();
 			particles.Play();
 		} else if (!takeOff && gameState.gameIsRunning()) {
-			Debug.Log(Time.time - lastFuelTime);
-			lastFuelTime = Time.time;
 			gameState.updateScore();
 			gameState.updateFuel(-0.7f);
 		}

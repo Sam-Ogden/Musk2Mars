@@ -94,7 +94,7 @@ public class GameStateController : MonoBehaviour {
 		ChangeState("Game Running");
 	}
 
-	void Awake() { 
+	void Awake() {
 		DontDestroyOnLoad (gameObject);
 		gameStateController = this;
 		if (gameStateController == null) {
@@ -104,11 +104,12 @@ public class GameStateController : MonoBehaviour {
 			Destroy (gameObject);
 		}
 
+		// Instantiate objects and give them standard names
 		Instantiate(ship, new Vector3(
 			0,
 			0 - (screenHeight/2) -groundCenterOffset + groundHeight,
 			0
-		), Quaternion.identity).name = "Player"; // Instantiate ship and give it standard name
+		), Quaternion.identity).name = "Player";
 		Instantiate(ground, new Vector3(
 			0,
 			0 - (screenHeight/2) - groundCenterOffset,

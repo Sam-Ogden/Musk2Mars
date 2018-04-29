@@ -40,7 +40,8 @@ GameObject:
   - component: {fileID: 50718419752545986}
   - component: {fileID: 114852673984636652}
   - component: {fileID: 114910898025915804}
-  - component: {fileID: 60407439349200734}
+  - component: {fileID: 61097081320053850}
+  - component: {fileID: 60436635165803632}
   m_Layer: 0
   m_Name: ShipPrefab
   m_TagString: Untagged
@@ -95,7 +96,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!60 &60407439349200734
+--- !u!60 &60436635165803632
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -349,6 +350,31 @@ PolygonCollider2D:
       - {x: -3.0549998, y: -4.825}
       - {x: -3.0549998, y: -4.525}
       - {x: -3.0649998, y: -4.515}
+--- !u!61 &61097081320053850
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1847352916723950}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.003508091, y: -3.073472}
+  m_SpriteTilingProperty:
+    border: {x: 3.59, y: 3.04, z: 3.59, w: 0.77}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 15.75, y: 15.75}
+    newSize: {x: 1, y: 1.6}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 8.585017, y: 3.5892754}
+  m_EdgeRadius: 0
 --- !u!114 &114852673984636652
 MonoBehaviour:
   m_ObjectHideFlags: 1
