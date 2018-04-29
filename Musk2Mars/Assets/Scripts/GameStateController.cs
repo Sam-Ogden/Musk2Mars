@@ -297,7 +297,7 @@ public class GameStateController : MonoBehaviour {
 	}
 
 	public void PlayHitFuelSound() {
-		//hitFuelSound.Play();
+		hitFuelSound.Play();
 	}
 
 	public void PlayHitCoinSound() {

@@ -37,7 +37,11 @@ public class DataControl : MonoBehaviour {
 	}
 
 	public string getValue(string k) {
-		return data [k];
+		try {
+			return data [k];
+		} catch (System.Exception e) {
+			return null;
+		}
 	}
 
 	public void setValue(string k, string v) {
@@ -90,7 +94,5 @@ public class DataControl : MonoBehaviour {
 //This is the object that is saved in the file
 [Serializable]
 class PlayerData {
-	
 	public Dictionary<string, string> data = new Dictionary<string, string>();
-
 }
