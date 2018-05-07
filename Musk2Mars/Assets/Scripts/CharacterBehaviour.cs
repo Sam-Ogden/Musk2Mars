@@ -41,9 +41,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		if(testMode) inputMode = "test";
-		takeOff = true;
-		particles.Stop();
+		// if(testMode) inputMode = "test";
+		// takeOff = true;
+		// particles.Stop();
 	}
 
 	// Update is called once per frame

@@ -39,11 +39,12 @@ public class DataControl : MonoBehaviour {
 	public string getValue(string k) {
 		try {
 			return data [k];
-		} catch (System.Exception e) {
+		} catch (KeyNotFoundException) {
 			return null;
 		}
 	}
 
+	// Should remove since unreliable a.t.m. and updateVal does same thing
 	public void setValue(string k, string v) {
 		data[k] = v;
 		save ();
