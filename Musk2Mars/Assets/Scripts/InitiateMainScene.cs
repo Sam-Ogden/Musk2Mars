@@ -51,9 +51,4 @@ public class InitiateMainScene : MonoBehaviour {
 		gameState.hitCoinSound = GameObject.Find("Sounds").transform.Find(
 									"coin_free").GetComponent<AudioSource>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

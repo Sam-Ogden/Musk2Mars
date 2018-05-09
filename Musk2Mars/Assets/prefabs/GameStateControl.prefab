@@ -51,9 +51,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bce7e942caae348eabd6ef094c494947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameMenu: {fileID: 0}
+  continueMenu: {fileID: 0}
+  HUD: {fileID: 0}
   ground: {fileID: 1610069140669834, guid: b5ae09b3ecfc553419cb30a8365e52ed, type: 2}
   landingPad: {fileID: 1552613253891868, guid: 55875a60773974a2583344a257718470, type: 2}
   ship: {fileID: 1847352916723950, guid: 2e617cbfff8ed1642bd94496c93714cd, type: 2}
+  displayScore: {fileID: 0}
+  displayCoins: {fileID: 0}
+  displayCoinsHUD: {fileID: 0}
+  mainMenuHighScore: {fileID: 0}
+  fuelBar: {fileID: 0}
   initialFuel: 1000
   maxFuel: 1000
   initialLandingFuel: 300
@@ -62,3 +70,6 @@ MonoBehaviour:
   padOffset: 1.18
   milestone1: 225
   landDistance: 20
+  backgroundMusic: {fileID: 0}
+  hitFuelSound: {fileID: 0}
+  hitCoinSound: {fileID: 0}

@@ -41,9 +41,9 @@ public class CharacterBehaviour : MonoBehaviour {
 		inputMode = "tilt";
 
 		// REMOVE BEFORE PUSHING
-		// if(testMode) inputMode = "test";
-		// takeOff = true;
-		// particles.Stop();
+		if(testMode) inputMode = "test";
+		takeOff = true;
+		particles.Stop();
 	}
 
 	// Update is called once per frame
@@ -121,26 +121,26 @@ public class CharacterBehaviour : MonoBehaviour {
 			Destroy(obj.gameObject);
 			gameState.updateFuel(150f);
 			gameState.PlayHitFuelSound();
+		} else if (obj.gameObject.CompareTag("Obstacle")) {
+			if (!gameState.isLanding()) {
+				gameState.ChangeState("First Death");
+			}
 		}
 	}
 
 	void OnCollisionEnter2D(Collision2D obj) {
-		if (obj.gameObject.CompareTag("Obstacle")) {
-			if (!gameState.isLanding()) {
-				gameState.ChangeState("First Death");
-			}
-		} else if (obj.gameObject.CompareTag("LandingGround")) {
+		if (obj.gameObject.CompareTag("LandingGround")) {
 			// Did we land safely?
 			if (obj.relativeVelocity.magnitude < 2.3) {			
 			//if(rb.velocity.magnitude < 5.1) {
-				Debug.Log("SUCCESSFUL LANDING");
+				// Debug.Log("SUCCESSFUL LANDING");
 				gameState.successfulLanding(1.5f);
 			}
 			gameState.ChangeState("End Game");
 		} else if (obj.gameObject.CompareTag("LandingPad") && gameState.isLanding()) {
 			if (obj.relativeVelocity.magnitude < 2.3) {
 			//if(rb.velocity.magnitude < 1.1) {
-				Debug.Log("SUPER SUCCESSFUL LANDING");
+				// Debug.Log("SUPER SUCCESSFUL LANDING");
 				gameState.successfulLanding(2f);
 			}
 			gameState.ChangeState("End Game");			

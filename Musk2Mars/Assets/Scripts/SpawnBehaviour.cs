@@ -1,14 +1,15 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class SpawnBehaviour : MonoBehaviour {
 
-	public GameStateController gameState;
 	public GameObject generator;// Prefab of generator object, assign in UI
 	public GameObject coin;		// Coin Prefab, assign in UI 💰
 	public GameObject fuel;		// Fuel Prefab, assign in UI ⛽️
 	public GameObject enemy1;	// Placeholder prefab for an enemy
+	public GameObject magnet;	// Magnet powerup Prefab, assign in UI
 	public float upperOffset;	// Distance between top of screen and spawner line
 	public float lowerOffset;
 	public float landBuffer;
@@ -16,25 +17,32 @@ public class SpawnBehaviour : MonoBehaviour {
 	public float collectibleGap;// Gap between lines of spawned collectibles
 	public float maxObstacleGap;
 	public float minObstacleGap;
+	public uint powerupFrequency; // The required number of patterns between powerup appearences
 	
-	private float obstacleGap;	// gap between lines of spawned obstacles
-	private Camera cam;			// Stores main camera 📹
-	private GameObject[] generators;	// Holds all collectible generators
-	private GameObject[] collectibles;	// Stores the prefabs of collectibles, declared further up
+	private GameStateController gameState;
+	private PowerupController powerupController;
+	private Camera cam;		// Stores main camera 📹
+	private GameObject[] generators; // Holds all collectible generators
+	private GameObject[] collectibles; // Stores the prefabs of collectibles, declared further up
 	private GameObject[] obstacles;
-	private Queue lines;	// Queue of information about what lines of collectibles to spawn 📏
+	private GameObject[] powerups;
+	private Queue lines; // Queue of information about what lines of collectibles to spawn 📏
+	private float obstacleGap;	// gap between lines of spawned obstacles
 	private float screenWidth;
 	private float screenHeight;
 	private float collectibleY;	// Stores the Y coordinate of the last spawned line
 	private float obstacleY;	// Stores the Y coordinate of the last spawned obstacle
 	private float minY;
 	private uint difficulty;
-	private uint generatorNum;	// The number of generators. How many objects can be on the screen at once
-	private int obstaclePos;	// The number of the generator that last spawned an obstacle
+	private uint generatorNum; // The number of generators. How many objects can be on the screen at once
+	private uint patternCount = 0; // The count of queued patterns since last powerup
+	private int obstaclePos; // The number of the generator that last spawned an obstacle
+	private const int pow = 2;	// Holds powerup to be spawned. Coin if not time for a powerup
 	private bool top;
 	private bool bot;
 
 	// Patterns should be added in reverse vertical order
+	// 0=nothing, 1=coin, 2=fuel, 3=Powerup
 	private byte[,,] patterns = {
 		{
 			{1,0,0,0,0,0,0,0,0,0,1},
@@ -42,7 +50,7 @@ public class SpawnBehaviour : MonoBehaviour {
 			{0,0,1,0,0,0,0,0,1,0,0},
 			{0,0,0,1,0,0,0,1,0,0,0},
 			{0,0,0,0,1,0,1,0,0,0,0},
-			{0,0,2,0,0,1,0,0,2,0,0},
+			{0,0,2,0,0,3,0,0,2,0,0},
 			{0,0,0,0,1,0,1,0,0,0,0},
 			{0,0,0,1,0,0,0,1,0,0,0},
 			{0,0,1,0,0,0,0,0,1,0,0},
@@ -51,7 +59,7 @@ public class SpawnBehaviour : MonoBehaviour {
 		},
 		{
 			{1,1,1,1,1,1,1,1,1,1,1},
-			{1,0,0,0,0,0,0,0,0,0,1},
+			{1,0,0,0,0,3,0,0,0,0,1},
 			{1,0,1,0,0,0,0,0,1,0,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
 			{1,0,0,0,0,0,0,0,0,0,1},
@@ -78,7 +86,7 @@ public class SpawnBehaviour : MonoBehaviour {
 		{
 			{0,0,0,0,0,1,1,1,1,1,1},
 			{0,0,0,0,0,1,1,1,1,1,1},
-			{0,0,0,0,0,0,0,0,0,0,0},
+			{0,0,3,0,0,0,0,0,0,0,0},
 			{0,0,0,0,0,0,0,0,0,0,0},
 			{1,1,1,1,1,1,1,1,1,1,1},
 			{0,0,0,0,0,0,0,0,0,2,0},
@@ -91,9 +99,12 @@ public class SpawnBehaviour : MonoBehaviour {
 	};
 	
 	// Use this for initialization
-	void Start () {
-		cam = Camera.main;	// Store main camera
+	void Start() {
+		cam = Camera.main; // Store main camera
 		gameState = GameStateController.gameStateController;
+		powerupController = PowerupController.controller;
+		powerupFrequency *= (uint) patterns.GetLength(1);
+
 		// Calculate screen sizes
 		var screenBottomLeft = cam.ViewportToWorldPoint(
 			new Vector3(0, 0, transform.position.z));
@@ -101,37 +112,41 @@ public class SpawnBehaviour : MonoBehaviour {
 			new Vector3(1, 1, transform.position.z));
 		screenWidth = screenTopRight.x - screenBottomLeft.x;
 		screenHeight = screenTopRight.y - screenBottomLeft.y;
+
+		// Initiate generators and objects to be spawned
 		generatorNum = (uint) patterns.GetLength(2);
-		collectibles = new GameObject[] { coin, fuel };	// Add more collectible prefabs here
-		obstacles = new GameObject[] { enemy1 };	// Add more enemy/obstacle prefabs here
-		positionSpawn(true, false);	// Move parent spawn line to top of screen
-		generateSpawners();	// Arrange spawners in line
+		collectibles = new GameObject[] { coin, fuel, null }; // Add more collectible prefabs here
+		obstacles = new GameObject[] { enemy1 }; // Add more enemy/obstacle prefabs here
+		powerups = new GameObject[] { magnet };	 // Add more powerups here
+		DeselectPow(); // Pick what Powerup should be spawned if the time comes
+		PositionSpawn(true, false);	// Move parent spawn line to top of screen
+		GenerateSpawners();	// Arrange spawners in line
 		obstacleGap = maxObstacleGap;
 		difficulty = 0;
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update() {
 		if(gameState.isLanding() && !bot) {
-			positionSpawn(false, true);
+			PositionSpawn(false, true);
 		} else if(gameState.gameIsRunning() && !top) {
-			positionSpawn(true, false);
+			PositionSpawn(true, false);
 		}
 
 		if(lines.Count <= 2) {
 			// Starting to run out of instructions so generate more
-			addPattern();
+			AddPattern();
 		}
 		if(Mathf.Abs(transform.position.y - obstacleY) >= obstacleGap && transform.position.y > minY) {
-			spawnObstacles();
+			SpawnObstacles();
 		} else if(Mathf.Abs(transform.position.y - collectibleY) >= collectibleGap && transform.position.y > minY) {
 			// Far enough from last spawned line, so spawn more
-			spawnCollectibles();
+			SpawnCollectibles();
 		}
 	}
 
 	// Positions spawn above view
-	void positionSpawn(bool newTop, bool newBot) {
+	void PositionSpawn(bool newTop, bool newBot) {
 		if(newTop) {
 			Vector3 topPosition = cam.transform.position;
 			topPosition.y += (screenHeight / 2) + upperOffset;
@@ -152,11 +167,11 @@ public class SpawnBehaviour : MonoBehaviour {
 	}
 
 	// Generate objects in order to keep track of positions without calculating each time
-	void generateSpawners() {
+	void GenerateSpawners() {
 		generators = new GameObject[generatorNum];
 		float gap = (screenWidth - screenCutoff) / (generatorNum - 1);	// Distribute generators on width
 		float xPosition = transform.position.x - ((screenWidth - screenCutoff) / 2);
-		for(int i = 0; i < generatorNum; i ++) {
+		for(uint i = 0; i < generatorNum; i ++) {
 			// Instantiate generators and make them children of the Spawn object
 			generators[i] = Instantiate(generator, new Vector3(
 				xPosition, transform.position.y, 0), Quaternion.identity, transform);
@@ -164,9 +179,9 @@ public class SpawnBehaviour : MonoBehaviour {
 		}
 	}
 
-	void addPattern() {
+	void AddPattern() {
 		int[] pad = {-1, -1};
-		int chosen = Random.Range(0, patterns.GetLength(0));
+		int chosen = UnityEngine.Random.Range(0, patterns.GetLength(0));
 		for(int i = 0; i < patterns.GetLength(1); i ++) {
 			lines.Enqueue(new int[] {chosen, i});
 		}
@@ -175,12 +190,22 @@ public class SpawnBehaviour : MonoBehaviour {
 		lines.Enqueue(pad);
 	}
 
-	void spawnCollectibles() {
+	void SpawnCollectibles() {
 		if(lines.Count != 0) {
+			if(patternCount == powerupFrequency) {
+				patternCount = 0;
+				if(!powerupController.GetActive()) {
+					SelectPow();
+				} else {
+					collectibles[pow] = coin;
+				}
+			} else if(patternCount == patterns.GetLength(1)) {
+				collectibles[pow] = coin;
+			}
 			collectibleY = transform.position.y;
 			int[] line = (int[]) lines.Dequeue();
 			if(line[0] != -1) {
-				for(int i = 0; i < generatorNum; i ++) {
+				for(uint i = 0; i < generatorNum; i ++) {
 					if (patterns[ line[0],line[1],i ] > 0) {
 						GameObject item;
 						if(top) {
@@ -194,19 +219,27 @@ public class SpawnBehaviour : MonoBehaviour {
 					}
 				}
 			}
+			patternCount++;
 		}
 	}
 
-	void spawnObstacles() {
+	void SpawnObstacles() {
 		if(difficulty < maxObstacleGap - minObstacleGap) {
 			difficulty += (uint) (Time.deltaTime / 19);
 		}
 		obstacleGap = maxObstacleGap - difficulty;
 		obstacleY = transform.position.y;
 		collectibleY = transform.position.y;
-		int i = Random.Range(0, obstacles.GetLength(0) - 1);
-		int j = Random.Range(0, generators.GetLength(0) - 1);
+		int i = UnityEngine.Random.Range(0, obstacles.GetLength(0) - 1);
+		int j = UnityEngine.Random.Range(0, generators.GetLength(0) - 1);
 		obstaclePos = j;
 		Instantiate(obstacles[i], generators[j].transform.position, Quaternion.identity);
+	}
+
+	void SelectPow() {
+		collectibles[pow] = powerups[UnityEngine.Random.Range(0, powerups.GetLength(0) - 1)];
+	}
+	void DeselectPow() {
+		collectibles[pow] = coin;
 	}
 }

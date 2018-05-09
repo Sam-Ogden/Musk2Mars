@@ -95,8 +95,6 @@ public class GameStateController : MonoBehaviour {
 	}
 
 	void Awake() {
-		DontDestroyOnLoad (gameObject);
-		gameStateController = this;
 		if (gameStateController == null) {
 			DontDestroyOnLoad (gameObject);
 			gameStateController = this;
@@ -107,7 +105,7 @@ public class GameStateController : MonoBehaviour {
 		// Instantiate objects and give them standard names
 		Instantiate(ship, new Vector3(
 			0,
-			0 - (screenHeight/2) -groundCenterOffset + groundHeight,
+			0 - (screenHeight/2) - groundCenterOffset + groundHeight,
 			0
 		), Quaternion.identity).name = "Player";
 		Instantiate(ground, new Vector3(
@@ -167,32 +165,9 @@ public class GameStateController : MonoBehaviour {
 		#endif
 	}
 
-	// Callback function for when unity finishes showing ad in showVideoAd
-	private void HandleShowAdResult(ShowResult result) {
-		switch (result)
-		{
-			case ShowResult.Finished:
-			Debug.Log("The ad was successfully shown.");
-			characterContinue();
-			seenAd = true;
-			break;
-			case ShowResult.Skipped:
-			Debug.Log("The ad was skipped before reaching the end.");
-			characterContinue();
-			break;
-			case ShowResult.Failed:
-			Debug.LogError("The ad failed to be shown.");
-			characterContinue();
-			break;
-		}
-	}
-	void characterContinue() {
-		ChangeState ("Game Running");
-		updateFuel(initialFuel);
-	}
 	// Returns to character bahaviour for the landing section of the game
-	void characterLand() {
-		ChangeState ("Landing");
+	public void characterLand() {
+		ChangeState("Landing");
 		fuel = 0;
 		updateFuel(initialLandingFuel);
 		// Spawn ground below camera
@@ -204,6 +179,30 @@ public class GameStateController : MonoBehaviour {
 		landingGround = Instantiate(ground, groundLoc, Quaternion.identity);
 		landingGround.tag = "LandingGround";
 		Instantiate(landingPad, padLoc, Quaternion.identity).tag = "LandingPad";	
+	}
+
+	// Callback function for when unity finishes showing ad in showVideoAd
+	private void HandleShowAdResult(ShowResult result) {
+		switch (result)
+		{
+			case ShowResult.Finished:
+				Debug.Log("The ad was successfully shown.");
+				characterContinue();
+				seenAd = true;
+				break;
+			case ShowResult.Skipped:
+				Debug.Log("The ad was skipped before reaching the end.");
+				characterContinue();
+				break;
+			case ShowResult.Failed:
+				Debug.LogError("The ad failed to be shown.");
+				characterContinue();
+				break;
+		}
+	}
+	void characterContinue() {
+		ChangeState("Game Running");
+		updateFuel(initialFuel);
 	}
 
 	// Update score once every 3 frames
